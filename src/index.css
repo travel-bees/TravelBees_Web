@@ -1,0 +1,166 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Brand palette */
+  --color-ink-950: #060d18;
+  --color-ink-900: #0a1424;
+  --color-ink-800: #10233b;
+  --color-ink-700: #1a3355;
+  --color-ink-600: #2a4a73;
+  --color-ink-500: #4a6a94;
+
+  --color-cream: #f8f5ef;
+  --color-sand: #ede5d8;
+  --color-sand-dark: #ddd2c0;
+
+  /* Accent — matched to the Travelbees logo yellow */
+  --color-gold-200: #f9e7c2;
+  --color-gold-300: #f6ce85;
+  --color-gold-400: #f3b145;
+  --color-gold-500: #ec9f2d;
+  --color-gold-600: #c87f1d;
+
+  --shadow-soft: 0 24px 60px -24px rgb(6 13 24 / 0.35);
+  --shadow-card: 0 30px 70px -30px rgb(6 13 24 / 0.45);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-cream);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background: var(--color-gold-300);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold-500);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Custom scrollbar for horizontal rails */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.8s var(--ease-out-expo),
+      transform 0.8s var(--ease-out-expo);
+    will-change: opacity, transform;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .hero-rise {
+    animation: hero-rise 1s var(--ease-out-expo) both;
+  }
+
+  .ken-burns {
+    animation: ken-burns 24s ease-out both;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .marquee-track {
+    animation: marquee 38s linear infinite;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(34px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero-progress {
+  width: 0;
+  animation-name: hero-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes hero-progress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.12);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .hero-rise,
+  .hero-progress,
+  .ken-burns,
+  .marquee-track {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
