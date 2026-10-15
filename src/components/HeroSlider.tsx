@@ -1,12 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { promotions } from "../data/promotions";
 import { px, pxSrcSet } from "../lib/media";
 import { Icon } from "./Icon";
-import { Button } from "./ui";
 
-const AUTOPLAY_MS = 6500;
+const AUTOPLAY_MS = 3000;
 
-export function HeroSlider() {
+interface HeroSliderProps {
+  children?: ReactNode;
+}
+
+export function HeroSlider({ children }: HeroSliderProps) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const touchStartX = useRef<number | null>(null);
@@ -36,7 +39,7 @@ export function HeroSlider() {
     <div
       role="region"
       aria-roledescription="carousel"
-      aria-label="Upcoming trips"
+      aria-label="Hero slider"
       className="absolute inset-0"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
@@ -61,7 +64,7 @@ export function HeroSlider() {
           aria-label={`${index + 1} of ${count}`}
           aria-hidden={index !== active}
           className={`absolute inset-0 transition-opacity duration-[1100ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${
-            index === active ? "opacity-100" : "opacity-0"
+            index === active ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
           <img
@@ -76,82 +79,37 @@ export function HeroSlider() {
               index === active ? "ken-burns" : "scale-105"
             }`}
           />
-          {/* Promo text card */}
-          <div
-            className={`absolute bottom-0 right-0 max-w-md p-5 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] sm:p-8 lg:bottom-10 lg:right-10 ${
-              index === active
-                ? "translate-y-0 opacity-100"
-                : "translate-y-6 opacity-0"
-            }`}
-          >
-            <div className="rounded-3xl border border-white/15 bg-ink-950/70 p-5 shadow-2xl backdrop-blur-xl sm:p-6">
-              <div className="flex items-center justify-between gap-4">
-                <p className="inline-flex items-center gap-2 text-[10.5px] font-semibold uppercase tracking-[0.2em] text-gold-300">
-                  <span className="h-1.5 w-1.5 rounded-full bg-gold-400" />
-                  {promo.label}
-                </p>
-                <p className="text-[11px] font-semibold text-cream/50">
-                  {index + 1} / {count}
-                </p>
-              </div>
-
-              <h2 className="mt-3 text-[1.35rem] font-bold leading-snug tracking-tight text-cream sm:text-[1.55rem]">
-                {promo.title}
-              </h2>
-              <p className="mt-2.5 line-clamp-3 text-[13.5px] leading-relaxed text-cream/70">
-                {promo.blurb}
-              </p>
-
-              <dl className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-[12.5px] font-medium text-cream/75">
-                <dd className="inline-flex items-center gap-1.5">
-                  <Icon name="calendar" className="h-3.5 w-3.5 text-gold-400" />
-                  {promo.date}
-                </dd>
-                <dd className="inline-flex items-center gap-1.5">
-                  <Icon name="clock" className="h-3.5 w-3.5 text-gold-400" />
-                  {promo.duration}
-                </dd>
-                <dd className="inline-flex items-center gap-1.5">
-                  <Icon name="wallet" className="h-3.5 w-3.5 text-gold-400" />
-                  {promo.price}
-                </dd>
-              </dl>
-
-              <div className="mt-5">
-                <Button href={promo.href} variant="primary" size="md" icon="arrow-right" className="w-full sm:w-auto">
-                  View Trip
-                </Button>
-              </div>
-            </div>
-          </div>
         </div>
       ))}
 
-      {/* Controls: arrows (desktop) + slide indicators, stacked above the promo card on mobile */}
-      <div className="absolute bottom-[22rem] left-5 right-5 z-10 flex items-center gap-4 sm:left-8 lg:bottom-8">
-        <div className="hidden gap-2.5 lg:flex">
-          <button
-            type="button"
-            onClick={() => goTo(active - 1)}
-            aria-label="Previous trip"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-cream backdrop-blur-sm transition-all duration-300 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-950"
-          >
-            <Icon name="chevron-left" className="h-5 w-5" />
-          </button>
-          <button
-            type="button"
-            onClick={() => goTo(active + 1)}
-            aria-label="Next trip"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-cream backdrop-blur-sm transition-all duration-300 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-950"
-          >
-            <Icon name="chevron-right" className="h-5 w-5" />
-          </button>
-        </div>
+      {/* Subtle overlay to highlight images while keeping navbar and controls legible */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/60 via-transparent to-ink-950/80" />
 
+      {/* Navigation arrows (desktop & tablet) */}
+      <button
+        type="button"
+        onClick={() => goTo(active - 1)}
+        aria-label="Previous slide"
+        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-20 hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-cream backdrop-blur-md bg-ink-950/30 transition-all duration-300 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-950 cursor-pointer shadow-lg"
+      >
+        <Icon name="chevron-left" className="h-5 w-5" />
+      </button>
+      <button
+        type="button"
+        onClick={() => goTo(active + 1)}
+        aria-label="Next slide"
+        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-20 hidden sm:inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 text-cream backdrop-blur-md bg-ink-950/30 transition-all duration-300 hover:border-gold-400 hover:bg-gold-500 hover:text-ink-950 cursor-pointer shadow-lg"
+      >
+        <Icon name="chevron-right" className="h-5 w-5" />
+      </button>
+
+      {/* Bottom controls & Action buttons */}
+      <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end px-5 pb-10 sm:pb-14">
+        {/* Slide indicators */}
         <div
-          className="flex items-center gap-2"
+          className="mb-5 flex items-center gap-2"
           role="tablist"
-          aria-label="Choose promoted trip"
+          aria-label="Choose hero slide"
         >
           {promotions.map((promo, index) => (
             <button
@@ -161,11 +119,11 @@ export function HeroSlider() {
               aria-selected={index === active}
               aria-label={`Slide ${index + 1}: ${promo.title}`}
               onClick={() => goTo(index)}
-              className="group flex h-6 items-center"
+              className="group flex h-6 items-center cursor-pointer"
             >
               <span
                 className={`relative block h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
-                  index === active ? "w-12 bg-white/25" : "w-5 bg-white/30 group-hover:bg-white/60"
+                  index === active ? "w-12 bg-white/30" : "w-5 bg-white/35 group-hover:bg-white/60"
                 }`}
               >
                 {index === active && (
@@ -179,6 +137,9 @@ export function HeroSlider() {
             </button>
           ))}
         </div>
+
+        {/* Buttons (Explore Trips & Plan My Trip) */}
+        {children}
       </div>
     </div>
   );
