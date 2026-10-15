@@ -8,6 +8,8 @@ import { Button, Reveal, SectionHeading } from "../components/ui";
 import { cn } from "../utils/cn";
 
 const monthOrder = [
+  "November",
+  "December",
   "January",
   "February",
   "March",
@@ -18,8 +20,6 @@ const monthOrder = [
   "August",
   "September",
   "October",
-  "November",
-  "December",
 ];
 
 export function FeaturedPackages() {
@@ -81,9 +81,9 @@ export function GroupDepartures() {
   const visible = (() => {
     if (filter === "All") return departures;
     if (filter === "Upcoming") {
-      return [...departures]
-        .sort((a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month))
-        .slice(0, 3);
+      return [...departures].sort(
+        (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
+      );
     }
     return departures.filter((departure) => departure.tripType === filter);
   })();

@@ -49,10 +49,10 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Nov – Mar",
     idealFor: "Friends, honeymooners, families",
-    startingPrice: 58000,
+    startingPrice: 45000,
     blurb:
       "The classic first-abroad trip: short flights, warm water, longtail boats and a night market around every corner. Easy to do cheap, easy to do luxuriously.",
-    highlights: ["Krabi island hopping", "Bangkok temples", "Phuket beach resorts"],
+    highlights: ["Coral Island & Pattaya shows", "Bangkok temples & river cruise", "Phuket & Krabi island hopping"],
   },
   {
     slug: "malaysia",
