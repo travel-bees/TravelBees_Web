@@ -36,13 +36,25 @@ export function scrollToId(id: string) {
 }
 
 export function navigate(to: string) {
- const target = parseHash(to.startsWith("#") ? to : `#${to}`);
+  const target = parseHash(to.startsWith("#") ? to : `#${to}`);
 
   const next = `#${target.path}${target.anchor ? `#${target.anchor}` : ""}`;
 
   if (window.location.hash === next) {
+    const rawId = target.anchor || (target.path === "/inspiration" ? "inspiration" : target.path.replace(/^\//, ""));
+    const scrollTarget =
+      rawId === "International" ||
+      rawId === "Domestic" ||
+      rawId === "international" ||
+      rawId === "domestic"
+        ? "inspiration"
+        : rawId;
+    if (scrollTarget) {
+      scrollToId(scrollTarget);
+    }
     return;
   }
 
   window.location.hash = next;
 }
+

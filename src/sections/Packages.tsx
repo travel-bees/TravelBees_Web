@@ -58,34 +58,37 @@ export function FeaturedPackages() {
   );
 }
 
-interface GroupDeparturesProps {
-  initialFilter?: string;
-}
+// interface GroupDeparturesProps {
+//   initialFilter?: string;
+// }
 export function GroupDepartures() {
-  const route = useRoute();
+  // const route = useRoute();
 
-  const [filter, setFilter] = useState<string>(
-    route.anchor || "Upcoming"
-  );
+  // const [filter, setFilter] = useState<string>(
+  //   route.anchor || "Upcoming"
+  // );
 
-  useEffect(() => {
-    if (!route.anchor) return;
+  // useEffect(() => {
+  //   if (!route.anchor) return;
 
-    setFilter(route.anchor);
+  //   setFilter(route.anchor);
 
-    // Wait until the current render/hash navigation has completed
-    setTimeout(() => {
-      scrollToId("group-departures");
-    }, 50);
-  }, [route.anchor]);
+  //   // Wait until the current render/hash navigation has completed
+  //   setTimeout(() => {
+  //     scrollToId("group-departures");
+  //   }, 50);
+  // }, [route.anchor]);
   const visible = (() => {
-    if (filter === "All") return departures;
-    if (filter === "Upcoming") {
-      return [...departures].sort(
+     return [...departures].sort(
         (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
       );
-    }
-    return departures.filter((departure) => departure.tripType === filter);
+    // if (filter === "All") return departures;
+    // if (filter === "Upcoming") {
+    //   return [...departures].sort(
+    //     (a, b) => monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month)
+    //   );
+    // }
+    // return departures.filter((departure) => departure.tripType === filter);
   })();
 
   return (
@@ -99,11 +102,11 @@ export function GroupDepartures() {
         <SectionHeading
           tone="light"
           eyebrow="Explore our tours"
-          title="Curated Experiences"
+          title="Upcoming Group Tours"
           subtitle="Thoughtfully designed journeys, from iconic destinations to wild adventures."
         />
 
-        <Reveal delay={180}>
+        {/* <Reveal delay={180}>
           <div className="no-scrollbar mt-10 flex gap-2 overflow-x-auto pb-1">
             {departureFilters.map((item) => (
               <button
@@ -122,7 +125,7 @@ export function GroupDepartures() {
               </button>
             ))}
           </div>
-        </Reveal>
+        </Reveal> */}
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((departure, index) => (

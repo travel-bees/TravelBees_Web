@@ -22,6 +22,7 @@ export const site = {
   email: "travelbees007@gmail.com",
   emailHref: "mailto:travelbees007@gmail.com",
   hours: "Mon – Sat · 9:30 AM – 7:00 PM IST",
+  facebookHref: "https://facebook.com/",
   instagramHandle: "@_travel_bees",
   instagramHref: "https://instagram.com/_travel_bees",
   googleReviewsHref: "https://www.google.com/maps/",
@@ -29,11 +30,12 @@ export const site = {
 } as const;
 
 export const nav = [
-  { label: "International", href: "/group-departures#International" },
-  { label: "Domestic", href: "/group-departures#Domestic" },
+  { label: "Group Tours", href: "/group-departures" },
+  { label: "International", href: "/inspiration#International" },
+  { label: "Domestic", href: "/inspiration#Domestic" },
   { label: "Custom Trips", href: "/custom-trip" },
   // { label: "About Us", href: "/about" },
-  { label: "Testimonials", href: "/testimonials" },
+  // { label: "Testimonials", href: "/testimonials" },
   { label: "FAQ", href: "/faqs" },
 ] as const;
 
@@ -52,8 +54,8 @@ export const footerColumns = [
     links: [
       { label: "Visa Assistance", href: "/custom-trip" },
       { label: "Flights", href: "/custom-trip" },
-      { label: "Domestic Packages", href: "/custom-trip" },
-      { label: "International Packages", href: "/custom-trip" },
+      { label: "Domestic Packages", href: "/inspiration#Domestic" },
+      { label: "International Packages", href: "/inspiration#International" },
       { label: "Honeymoon Packages", href: "/custom-trip" },
       // { label: "Corporate Travel", href: "/custom-trip" },
     ],

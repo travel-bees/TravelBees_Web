@@ -7,31 +7,45 @@ import type { GroupDeparture } from "./types";
  */
 export const departures: GroupDeparture[] = [
   {
-    id: "th-pb-nov",
-    destination: "Thailand — Pattaya & Bangkok",
+    id: "th-bp-jan",
+    destination: "Thailand Escape",
     country: "Pattaya · Bangkok",
-    departureDate: "20 November 2026",
-    month: "November",
+    departureDate: "05 January 2026",
+    month: "January",
     duration: "4N / 5D",
-    price: 45000,
+    price: 61999,
     tripType: "International",
     badge: "Popular",
     imageId: 1682794,
     packageSlug: "thailand-pattaya-bangkok",
   },
   {
-    id: "th-dec",
-    destination: "Thailand — Phuket & Krabi",
-    country: "Bangkok · Phuket · Krabi",
-    departureDate: "19 December 2026",
-    month: "December",
+    id: "my-kl-jan",
+    destination: "Magical Malaysia",
+    country: "Kuala Lumpur",
+    departureDate: "15 January 2026",
+    month: "January",
+    duration: "3N / 4D",
+    price: 54999,
+    tripType: "International",
+    badge: "Popular",
+    imageId: 433942,
+    packageSlug: "malaysia-highlights",
+  },
+  {
+    id: "th-pk-dec",
+    destination: "Tropical Thailand",
+    country: "Phuket · Krabi",
+    departureDate: "28 January 2026",
+    month: "January",
     duration: "4N / 5D",
-    price: 62000,
+    price: 72999,
     tripType: "International",
     badge: "Early Bird",
     imageId: 31833429,
     packageSlug: "thailand-escape",
   },
+  /* Additional group departures (temporarily paused):
   {
     id: "vn-nov",
     destination: "Vietnam",
@@ -118,6 +132,7 @@ export const departures: GroupDeparture[] = [
     badge: "Early Bird",
     imageId: 4050794,
   },
+  */
 ];
 
 export const departureFilters = ["All", "International", "Domestic", "Safari", "Upcoming"] as const;

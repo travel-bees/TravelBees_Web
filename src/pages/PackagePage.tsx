@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { getPackage, packages } from "../data/packages";
 import { site } from "../data/site";
 import { useApp } from "../lib/app-context";
@@ -5,13 +6,29 @@ import { px, pxSrcSet } from "../lib/media";
 import { useSeo } from "../lib/seo";
 import { Icon } from "../components/Icon";
 import { PackageCard } from "../components/PackageCard";
-import { Badge, Button, Reveal, SectionHeading } from "../components/ui";
+import { Button } from "../components/ui";
 import { Link } from "../components/ui";
 import { cn } from "../utils/cn";
 
 export function PackagePage({ slug }: { slug: string }) {
   const pkg = getPackage(slug);
   const { openEnquiry } = useApp();
+
+  // Accordion state for itinerary days
+  const [openDays, setOpenDays] = useState<Record<string, boolean>>({
+    "Day 01": true,
+    "Day 1": true,
+  });
+
+  // Policy accordions state
+  const [openPolicies, setOpenPolicies] = useState<{ cancellation: boolean; terms: boolean }>({
+    cancellation: true,
+    terms: false,
+  });
+
+  // Quick Enquiry Form state
+  const [formData, setFormData] = useState({ name: "", email: "", mobile: "" });
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   useSeo({
     title: pkg ? `${pkg.name} · ${pkg.duration} from ${pkg.priceLabel} | Travelbees` : "Trip not found | Travelbees",
@@ -66,403 +83,665 @@ export function PackagePage({ slug }: { slug: string }) {
   }
 
   const whatsappMessage = encodeURIComponent(
-    `Hi Travelbees! I'm interested in the ${pkg.name} (${pkg.duration}). Could you share more details?`,
+    `Hi Travelbees! I'm interested in the ${pkg.name} (${pkg.duration}). Please share details and departure dates.`,
   );
 
-  const quickInfo = [
-    { label: "Duration", value: pkg.duration, icon: "clock" as const },
-    { label: "Starting city", value: pkg.startingCity, icon: "plane" as const },
-    { label: "Best time", value: pkg.bestTime, icon: "calendar" as const },
-    { label: "Trip type", value: pkg.tripType, icon: "compass" as const },
-    { label: "Group / private", value: pkg.styles.join(" · "), icon: "users" as const },
-  ];
+  const toggleDay = (dayKey: string) => {
+    setOpenDays((prev) => ({ ...prev, [dayKey]: !prev[dayKey] }));
+  };
+
+  const toggleAllDays = (expand: boolean) => {
+    const next: Record<string, boolean> = {};
+    pkg.itinerary.forEach((d) => {
+      next[d.day] = expand;
+    });
+    setOpenDays(next);
+  };
+
+  const allDaysExpanded = pkg.itinerary.every((d) => openDays[d.day]);
+
+  const handleEnquirySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.name || !formData.mobile) return;
+    setFormSubmitted(true);
+  };
+
+  // Gallery images (Main + 4 thumbnails)
+  const gallery = [pkg.imageId, ...(pkg.galleryIds || [])];
+  const mainImage = gallery[0];
+  const thumb1 = gallery[1] || gallery[0];
+  const thumb2 = gallery[2] || gallery[0];
+  const thumb3 = gallery[3] || gallery[1] || gallery[0];
+  const thumb4 = gallery[4] || gallery[2] || gallery[0];
 
   const related = packages.filter((item) => item.slug !== pkg.slug).slice(0, 3);
 
+  // Default Things to Carry
+  const thingsToCarry = [
+    "Valid passport with at least 6 months validity & required visa",
+    "Physical photocopies of passport, visa & round-trip flight tickets",
+    "Mobile phone, charger & high-capacity power bank",
+    "Universal travel adapter plug",
+    "International debit/credit cards & local currency cash",
+    "Comfortable walking shoes & light casual sightseeing clothing",
+    "Swimwear, beach towels & change of clothes for water sports",
+    "Personal medication, basic first-aid & sunscreen lotion",
+  ];
+
   return (
-    <article className="bg-cream pb-24 lg:pb-0">
-      {/* Hero */}
-      <header className="relative isolate overflow-hidden">
-        <img
-          src={px(pkg.imageId, 1920, 1200)}
-          srcSet={pxSrcSet(pkg.imageId, 1200)}
-          sizes="100vw"
-          alt={`${pkg.name} — ${pkg.destination}`}
-          fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/55 to-ink-950/45" />
+    <div className="bg-ink-950 text-cream min-h-screen pb-24 lg:pb-16">
+      {/* Top Bar with Back Button */}
+      <div className="mx-auto max-w-7xl px-4 pt-28 pb-3 sm:px-6 sm:pt-32 flex justify-between items-center">
+        <Link
+          to="/group-departures"
+          className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 text-sm font-medium transition-colors"
+        >
+          <Icon name="chevron-left" className="h-4 w-4" />
+          Back to Packages
+        </Link>
+        <span className="text-xs text-cream/50 uppercase tracking-widest hidden sm:inline-block">
+          {pkg.destination} · {pkg.tripType}
+        </span>
+      </div>
 
-        <div className="relative mx-auto max-w-[1280px] px-5 pb-16 pt-32 sm:px-8 sm:pb-20 sm:pt-40">
-          <Link
-            to="/group-departures"
-            className="inline-flex items-center gap-2 text-[13px] font-medium text-cream/70 transition-colors hover:text-cream"
-          >
-            <Icon name="chevron-left" className="h-4 w-4" />
-            Group departures
-          </Link>
+      {/* Hero Section with 5-Photo Collage Grid */}
+      <section className="mx-auto max-w-7xl px-4 pt-2 pb-6 sm:px-6">
+        <div className="relative">
+          <div className="grid grid-cols-4 grid-rows-2 gap-2 md:gap-3 aspect-[16/10] sm:aspect-[21/9] rounded-3xl overflow-hidden border border-gold-500/20 shadow-2xl shadow-black/80 bg-ink-900">
+            {/* Big Main Left Photo */}
+            <div className="relative col-span-2 row-span-2 overflow-hidden group">
+              <img
+                src={px(mainImage, 1400, 1000)}
+                srcSet={pxSrcSet(mainImage, 1000)}
+                alt={`${pkg.name} main view`}
+                className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                loading="eager"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/20 to-transparent" />
+            </div>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <Badge tone="gold">{pkg.duration}</Badge>
-            <Badge tone="light">{pkg.category}</Badge>
-            <Badge tone="light">{pkg.tripType}</Badge>
+            {/* 4 Smaller Thumbnail Photos on Right */}
+            <div className="relative col-span-1 row-span-1 overflow-hidden group">
+              <img
+                src={px(thumb1, 700, 500)}
+                alt={`${pkg.name} thumbnail 1`}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+            </div>
+            <div className="relative col-span-1 row-span-1 overflow-hidden group">
+              <img
+                src={px(thumb2, 700, 500)}
+                alt={`${pkg.name} thumbnail 2`}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+            </div>
+            <div className="relative col-span-1 row-span-1 overflow-hidden group">
+              <img
+                src={px(thumb3, 700, 500)}
+                alt={`${pkg.name} thumbnail 3`}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+            </div>
+            <div className="relative col-span-1 row-span-1 overflow-hidden group">
+              <img
+                src={px(thumb4, 700, 500)}
+                alt={`${pkg.name} thumbnail 4`}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                loading="lazy"
+              />
+            </div>
           </div>
 
-          <h1 className="mt-5 max-w-3xl text-[2.6rem] font-extrabold leading-[1.03] tracking-[-0.035em] text-cream sm:text-6xl">
-            {pkg.name}
-          </h1>
-          <p className="mt-4 max-w-xl text-[17px] leading-relaxed text-cream/75">{pkg.tagline}</p>
-
-          <div className="mt-8 flex flex-wrap items-end gap-x-10 gap-y-5">
-            <div>
-              <span className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-cream/50">
-                Starting from
+          {/* Title Overlay Banner on Gallery Bottom */}
+          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-transparent rounded-b-3xl px-5 sm:px-8 py-5">
+            <h1 className="text-xl sm:text-3xl font-extrabold text-cream tracking-tight">
+              {pkg.name}{" "}
+              <span className="text-gold-300 font-semibold text-sm sm:text-lg block sm:inline-block sm:ml-2">
+                · {pkg.duration}
               </span>
-              <span className="text-[2.2rem] font-extrabold tracking-tight text-gold-300">
-                {pkg.priceLabel}
-              </span>
-              <span className="ml-2 text-[13px] text-cream/55">per person*</span>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <Button
-                variant="primary"
-                size="lg"
-                onClick={() =>
-                  openEnquiry(
-                    {
-                      destination: pkg.destination,
-                      tripType: pkg.styles[0] === "Safari" ? "Safari" : pkg.tripType.split("·")[0].trim(),
-                    },
-                    `Package · ${pkg.name}`,
-                  )
-                }
-              >
-                Enquire Now
-              </Button>
-              <Button variant="whatsapp" size="lg" href={`${site.whatsappHref}?text=${whatsappMessage}`}>
-                WhatsApp Us
-              </Button>
-              <Button variant="light" size="lg" href={site.phoneHref}>
-                Call Us
-              </Button>
-            </div>
+            </h1>
+            <p className="mt-1 text-xs sm:text-sm text-cream/70 line-clamp-1">{pkg.tagline}</p>
           </div>
         </div>
-      </header>
 
-      {/* Quick info */}
-      <section aria-label="Quick information" className="border-b border-ink-900/10 bg-white">
-        <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-          <dl className="grid grid-cols-2 gap-px bg-ink-900/10 md:grid-cols-3 lg:grid-cols-5">
-            {quickInfo.map((item) => (
-              <div key={item.label} className="flex items-start gap-3 bg-white px-5 py-6">
-                <Icon name={item.icon} className="mt-0.5 h-[18px] w-[18px] shrink-0 text-gold-600" />
-                <div>
-                  <dt className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-ink-700/50">
-                    {item.label}
-                  </dt>
-                  <dd className="mt-1 text-[14.5px] font-semibold text-ink-900">{item.value}</dd>
-                </div>
-              </div>
-            ))}
-          </dl>
+        {/* Quick Info Badges Bar */}
+        <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 mt-5">
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/[0.06] border border-gold-500/20 rounded-full text-gold-300 text-xs sm:text-sm font-medium">
+            <Icon name="clock" className="w-3.5 h-3.5 text-gold-400" />
+            {pkg.duration}
+          </span>
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/[0.06] border border-gold-500/20 rounded-full text-gold-300 text-xs sm:text-sm font-medium">
+            <Icon name="pin" className="w-3.5 h-3.5 text-gold-400" />
+            {pkg.destination} ({pkg.hotels.map((h) => h.city).join(", ")})
+          </span>
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/[0.06] border border-gold-500/20 rounded-full text-gold-300 text-xs sm:text-sm font-medium">
+            <Icon name="users" className="w-3.5 h-3.5 text-gold-400" />
+            Max 25 People · Group &amp; Private
+          </span>
+          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white/[0.06] border border-gold-500/20 rounded-full text-gold-300 text-xs sm:text-sm font-medium">
+            <Icon name="plane" className="w-3.5 h-3.5 text-gold-400" />
+            {pkg.startingCity} Departure
+          </span>
         </div>
       </section>
 
-      {/* Body */}
-      <div className="mx-auto max-w-[1280px] px-5 py-16 sm:px-8 sm:py-20">
-        <div className="grid gap-14 lg:grid-cols-[1.55fr_1fr] lg:gap-16">
-          <div>
-            <Section id="overview" title="Overview">
-              <p className="text-[16.5px] leading-relaxed text-ink-700/80">{pkg.overview}</p>
-              <ul className="mt-7 grid gap-3 sm:grid-cols-2">
+      {/* Main Content Layout: Left 2 Cols + Right 1 Col Sidebar */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column (2 Cols) */}
+          <div className="lg:col-span-2 space-y-9">
+            {/* Itinerary Section with Expandable Accordions */}
+            <section id="itinerary">
+              <div className="flex items-center justify-between mb-5">
+                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                  <span className="w-1.5 h-6 bg-gold-500 rounded-sm inline-block" />
+                  Day-by-Day Itinerary
+                </h2>
+                <button
+                  type="button"
+                  onClick={() => toggleAllDays(!allDaysExpanded)}
+                  className="text-xs font-semibold text-gold-400 hover:text-gold-300 transition-colors cursor-pointer"
+                >
+                  {allDaysExpanded ? "Collapse All" : "Expand All"}
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {pkg.itinerary.map((day) => {
+                  const isOpen = !!openDays[day.day];
+                  return (
+                    <div
+                      key={day.day}
+                      className="rounded-2xl overflow-hidden border border-gold-500/20 bg-white/[0.04] transition-all duration-300 hover:border-gold-500/40"
+                    >
+                      <button
+                        type="button"
+                        onClick={() => toggleDay(day.day)}
+                        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer transition-colors hover:bg-gold-500/[0.05]"
+                      >
+                        <span className="font-semibold text-cream text-[15px] sm:text-[16px] flex items-center gap-2.5">
+                          <span className="text-gold-400 font-bold tracking-wider">{day.day}</span>
+                          <span className="text-cream/40">·</span>
+                          <span>{day.title}</span>
+                        </span>
+                        <Icon
+                          name="chevron-down"
+                          className={cn(
+                            "w-4 h-4 text-gold-400 shrink-0 transition-transform duration-300",
+                            isOpen && "rotate-180",
+                          )}
+                        />
+                      </button>
+
+                      {isOpen && (
+                        <div className="px-5 pb-5 pt-1 border-t border-white/5 space-y-3.5">
+                          <p className="text-[14.5px] leading-relaxed text-cream/80">
+                            {day.description}
+                          </p>
+
+                          {/* Quick details */}
+                          <div className="flex flex-wrap items-center gap-2 text-xs pt-1">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20">
+                              <Icon name="utensils" className="w-3 h-3 text-gold-400" />
+                              Breakfast Included
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 text-cream/75 border border-white/10">
+                              <Icon name="hotel" className="w-3 h-3 text-gold-400" />
+                              Hotel Stay Included
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+
+            {/* Trip Overview Card */}
+            <section className="bg-white/[0.04] rounded-2xl p-6 border border-white/10 space-y-3">
+              <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5">
+                <Icon name="compass" className="w-5 h-5 text-gold-400" />
+                Trip Overview
+              </h2>
+              <p className="text-cream/80 text-[15px] leading-relaxed whitespace-pre-line">
+                {pkg.overview}
+              </p>
+            </section>
+
+            {/* 3 Key Feature Cards Grid */}
+            <section className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div className="bg-white/[0.04] rounded-2xl p-4 text-center border border-white/10 hover:border-gold-500/40 transition-colors">
+                <div className="w-10 h-10 mx-auto mb-2.5 rounded-full bg-gold-500/10 flex items-center justify-center">
+                  <Icon name="hotel" className="w-5 h-5 text-gold-400" />
+                </div>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-cream/50 mb-1">
+                  Accommodation
+                </h3>
+                <p className="text-cream font-medium text-xs sm:text-sm">
+                  {pkg.hotels[0]?.stay || "3★ / 4★ Hotels (Twin Sharing)"}
+                </p>
+              </div>
+
+              <div className="bg-white/[0.04] rounded-2xl p-4 text-center border border-white/10 hover:border-gold-500/40 transition-colors">
+                <div className="w-10 h-10 mx-auto mb-2.5 rounded-full bg-gold-500/10 flex items-center justify-center">
+                  <Icon name="car" className="w-5 h-5 text-gold-400" />
+                </div>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-cream/50 mb-1">
+                  Transfers
+                </h3>
+                <p className="text-cream font-medium text-xs sm:text-sm">
+                  Private AC vehicles for all airport &amp; sightseeing
+                </p>
+              </div>
+
+              <div className="bg-white/[0.04] rounded-2xl p-4 text-center border border-white/10 hover:border-gold-500/40 transition-colors">
+                <div className="w-10 h-10 mx-auto mb-2.5 rounded-full bg-gold-500/10 flex items-center justify-center">
+                  <Icon name="utensils" className="w-5 h-5 text-gold-400" />
+                </div>
+                <h3 className="text-xs font-semibold uppercase tracking-wider text-cream/50 mb-1">
+                  Meals
+                </h3>
+                <p className="text-cream font-medium text-xs sm:text-sm">
+                  Daily breakfasts + meals as per itinerary
+                </p>
+              </div>
+            </section>
+
+            {/* Trip Highlights */}
+            <section className="bg-white/[0.04] rounded-2xl p-6 border border-white/10">
+              <h2 className="text-lg sm:text-xl font-bold text-white mb-4 flex items-center gap-2.5">
+                <Icon name="sparkles" className="w-5 h-5 text-gold-400" />
+                Trip Highlights
+              </h2>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                 {pkg.highlights.map((highlight) => (
-                  <li
-                    key={highlight}
-                    className="flex items-start gap-3 rounded-2xl border border-ink-900/10 bg-white px-4 py-3.5 text-[14.5px] text-ink-800"
-                  >
-                    <span className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gold-500 text-ink-950">
-                      <Icon name="check" className="h-3 w-3" strokeWidth={3} />
-                    </span>
-                    {highlight}
+                  <li key={highlight} className="flex items-start gap-2.5 text-cream/80 text-[14px]">
+                    <div className="w-2 h-2 bg-gold-400 rounded-full mt-2 shrink-0" />
+                    <span>{highlight}</span>
                   </li>
                 ))}
               </ul>
-            </Section>
+            </section>
 
-            <Section id="itinerary" title="Day-by-day itinerary">
-              <ol className="relative space-y-0 border-l border-ink-900/15 pl-7">
-                {pkg.itinerary.map((day) => (
-                  <li key={day.day} className="relative pb-8 last:pb-0">
-                    <span className="absolute -left-[38px] top-1 inline-flex h-4 w-4 items-center justify-center rounded-full border-2 border-cream bg-gold-500" />
-                    <p className="text-[11.5px] font-bold uppercase tracking-[0.18em] text-gold-600">
-                      {day.day}
-                    </p>
-                    <h3 className="mt-1.5 text-[1.15rem] font-bold tracking-tight text-ink-900">
-                      {day.title}
-                    </h3>
-                    <p className="mt-2 text-[15px] leading-relaxed text-ink-700/75">
-                      {day.description}
-                    </p>
-                  </li>
-                ))}
-              </ol>
-            </Section>
-
-            <Section id="inclusions" title="Inclusions">
-              <List items={pkg.inclusions} tone="positive" />
-            </Section>
-
-            <Section id="exclusions" title="Exclusions">
-              <List items={pkg.exclusions} tone="neutral" />
-            </Section>
-
-            <Section id="hotels" title="Hotels & accommodation">
-              <div className="grid gap-4 sm:grid-cols-2">
-                {pkg.hotels.map((hotel) => (
-                  <div
-                    key={hotel.city}
-                    className="rounded-2xl border border-ink-900/10 bg-white p-5"
-                  >
-                    <div className="flex items-baseline justify-between gap-3">
-                      <h4 className="text-[1.05rem] font-bold tracking-tight text-ink-900">
-                        {hotel.city}
-                      </h4>
-                      <span className="text-[12.5px] font-semibold text-gold-600">
-                        {hotel.nights}
-                      </span>
-                    </div>
-                    <p className="mt-2 text-[14.5px] text-ink-700/75">{hotel.stay}</p>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-4 text-[12.5px] text-ink-700/50">
-                Hotel categories are indicative. Equivalent properties may be substituted based on
-                availability at the time of booking.
-              </p>
-            </Section>
-
-            <Section id="experiences" title="Experiences">
-              <div className="flex flex-wrap gap-2.5">
-                {pkg.experiences.map((experience) => (
-                  <span
-                    key={experience}
-                    className="rounded-full border border-ink-900/15 bg-white px-4 py-2.5 text-[14px] font-medium text-ink-800"
-                  >
-                    {experience}
-                  </span>
-                ))}
-              </div>
-            </Section>
-
-            <Section id="important-info" title="Important information">
-              <List items={pkg.importantInfo} tone="neutral" />
-            </Section>
-
-            <Section id="cancellation" title="Cancellation policy">
-              <List items={pkg.cancellation} tone="neutral" />
-              <p className="mt-4 text-[12.5px] text-ink-700/50">
-                Summary shown for reference — the full cancellation policy is shared with your booking
-                confirmation.
-              </p>
-            </Section>
-
-            <Section id="faqs" title="FAQs">
-              <div className="space-y-3">
-                {pkg.faqs.map((faq) => (
-                  <details
-                    key={faq.q}
-                    className="group rounded-2xl border border-ink-900/10 bg-white px-5 py-4 open:shadow-soft"
-                  >
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15.5px] font-semibold text-ink-900">
-                      {faq.q}
-                      <Icon
-                        name="chevron-down"
-                        className="h-4 w-4 shrink-0 text-gold-600 transition-transform duration-300 group-open:rotate-180"
-                      />
-                    </summary>
-                    <p className="mt-3 text-[15px] leading-relaxed text-ink-700/75">{faq.a}</p>
-                  </details>
-                ))}
-              </div>
-            </Section>
-          </div>
-
-          {/* Sidebar */}
-          <aside className="hidden lg:block">
-            <div className="sticky top-28 space-y-5">
-              <div className="rounded-3xl border border-ink-900/10 bg-white p-6 shadow-soft">
-                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-700/50">
-                  Starting from
-                </span>
-                <p className="mt-1.5 text-[2.1rem] font-extrabold tracking-tight text-ink-900">
-                  {pkg.priceLabel}
-                </p>
-                <p className="text-[13px] text-ink-700/60">per person on twin sharing*</p>
-
-                <div className="mt-6 space-y-2.5">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="w-full"
-                    onClick={() =>
-                      openEnquiry(
-                        {
-                          destination: pkg.destination,
-                          tripType: pkg.tripType.split("·")[0].trim(),
-                        },
-                        `Package sidebar · ${pkg.name}`,
-                      )
-                    }
-                  >
-                    Enquire Now
-                  </Button>
-                  <Button
-                    variant="whatsapp"
-                    size="lg"
-                    className="w-full"
-                    href={`${site.whatsappHref}?text=${whatsappMessage}`}
-                  >
-                    Enquire on WhatsApp
-                  </Button>
-                  <Button variant="outline" size="lg" className="w-full" href={site.phoneHref}>
-                    Call {site.phone}
-                  </Button>
-                </div>
-              </div>
-
-              <div className="rounded-3xl bg-ink-900 p-6 text-cream">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-gold-300">
-                  Talk to a travel expert
-                </p>
-                <p className="mt-3 text-[14.5px] leading-relaxed text-cream/75">
-                  Not sure this is the right fit? Tell us your dates and budget and we'll suggest the
-                  trip that actually works.
-                </p>
-                <div className="mt-5 space-y-2.5 text-[14px]">
-                  <a href={site.phoneHref} className="flex items-center gap-2.5 hover:text-gold-300">
-                    <Icon name="phone" className="h-4 w-4 text-gold-400" />
-                    {site.phone}
-                  </a>
-                  <a
-                    href={site.emailHref}
-                    className="flex items-center gap-2.5 hover:text-gold-300"
-                  >
-                    <Icon name="mail" className="h-4 w-4 text-gold-400" />
-                    {site.email}
-                  </a>
-                  <p className="flex items-center gap-2.5 text-cream/60">
-                    <Icon name="clock" className="h-4 w-4 text-gold-400" />
-                    {site.hours}
-                  </p>
-                </div>
-              </div>
-
-              <div className="rounded-3xl border border-ink-900/10 bg-white p-6">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-700/50">
-                  Included at a glance
-                </p>
-                <ul className="mt-4 space-y-2.5">
-                  {pkg.inclusions.slice(0, 4).map((item) => (
-                    <li key={item} className="flex items-start gap-2.5 text-[13.5px] text-ink-700/80">
-                      <Icon name="check" className="mt-0.5 h-4 w-4 shrink-0 text-gold-600" />
-                      {item}
+            {/* Side-by-side Inclusions & Exclusions */}
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              {/* Inclusions */}
+              <div className="bg-emerald-950/20 rounded-2xl p-6 border border-emerald-500/25">
+                <h3 className="text-base sm:text-lg font-bold text-emerald-400 mb-4 flex items-center gap-2">
+                  <Icon name="check" className="w-4 h-4 text-emerald-400" />
+                  Inclusions
+                </h3>
+                <ul className="space-y-2.5">
+                  {pkg.inclusions.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-cream/80 text-[13.5px]">
+                      <Icon name="check" className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
+
+              {/* Exclusions */}
+              <div className="bg-rose-950/20 rounded-2xl p-6 border border-rose-500/25">
+                <h3 className="text-base sm:text-lg font-bold text-rose-400 mb-4 flex items-center gap-2">
+                  <Icon name="x" className="w-4 h-4 text-rose-400" />
+                  Exclusions
+                </h3>
+                <ul className="space-y-2.5">
+                  {pkg.exclusions.map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-cream/80 text-[13.5px]">
+                      <Icon name="x" className="w-4 h-4 text-rose-400 mt-0.5 shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            {/* Things to Carry Checklist */}
+            <section className="bg-white/[0.04] rounded-2xl p-6 border border-gold-500/20">
+              <h3 className="text-lg font-bold text-gold-400 mb-4 flex items-center gap-2.5">
+                <Icon name="backpack" className="w-5 h-5 text-gold-400" />
+                Things to Carry
+              </h3>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2.5">
+                {thingsToCarry.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-cream/80 text-[13.5px]">
+                    <div className="w-2 h-2 bg-gold-400 rounded-full mt-2 shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            {/* Hotels & Stays Breakdown */}
+            <section className="bg-white/[0.04] rounded-2xl p-6 border border-white/10">
+              <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2.5">
+                <Icon name="hotel" className="w-5 h-5 text-gold-400" />
+                Hotels &amp; Accommodation
+              </h3>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {pkg.hotels.map((hotel) => (
+                  <div
+                    key={hotel.city}
+                    className="rounded-xl border border-white/10 bg-white/[0.03] p-4"
+                  >
+                    <div className="flex items-baseline justify-between gap-2">
+                      <h4 className="font-bold text-cream text-[15px]">{hotel.city}</h4>
+                      <span className="text-xs font-semibold text-gold-400">{hotel.nights}</span>
+                    </div>
+                    <p className="mt-1.5 text-xs text-cream/70">{hotel.stay}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Policies Accordions */}
+            <section className="space-y-3">
+              <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2.5 mb-4">
+                <Icon name="shield" className="w-5 h-5 text-gold-400" />
+                Policies &amp; Guidelines
+              </h2>
+
+              {/* Cancellation Policy */}
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04]">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenPolicies((prev) => ({ ...prev, cancellation: !prev.cancellation }))
+                  }
+                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer hover:bg-white/[0.02]"
+                >
+                  <span className="font-semibold text-cream text-sm sm:text-base">
+                    Cancellation &amp; Refund Policy
+                  </span>
+                  <Icon
+                    name="chevron-down"
+                    className={cn(
+                      "w-4 h-4 text-gold-400 shrink-0 transition-transform",
+                      openPolicies.cancellation && "rotate-180",
+                    )}
+                  />
+                </button>
+                {openPolicies.cancellation && (
+                  <div className="px-5 pb-5 pt-1 border-t border-white/5 space-y-2">
+                    <ul className="space-y-1.5">
+                      {pkg.cancellation.map((rule) => (
+                        <li key={rule} className="text-xs sm:text-sm text-cream/75 flex items-start gap-2">
+                          <span className="text-gold-400">•</span>
+                          <span>{rule}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Terms & Important Information */}
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-white/[0.04]">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setOpenPolicies((prev) => ({ ...prev, terms: !prev.terms }))
+                  }
+                  className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer hover:bg-white/[0.02]"
+                >
+                  <span className="font-semibold text-cream text-sm sm:text-base">
+                    Terms, Visa &amp; Immigration Rules
+                  </span>
+                  <Icon
+                    name="chevron-down"
+                    className={cn(
+                      "w-4 h-4 text-gold-400 shrink-0 transition-transform",
+                      openPolicies.terms && "rotate-180",
+                    )}
+                  />
+                </button>
+                {openPolicies.terms && (
+                  <div className="px-5 pb-5 pt-1 border-t border-white/5 space-y-2">
+                    <ul className="space-y-1.5">
+                      {pkg.importantInfo.map((info) => (
+                        <li key={info} className="text-xs sm:text-sm text-cream/75 flex items-start gap-2">
+                          <span className="text-gold-400">•</span>
+                          <span>{info}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* FAQs Accordion */}
+            {pkg.faqs && pkg.faqs.length > 0 && (
+              <section className="bg-white/[0.04] rounded-2xl p-6 border border-white/10">
+                <h2 className="text-lg sm:text-xl font-bold text-white mb-4">
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-2.5">
+                  {pkg.faqs.map((faq) => (
+                    <details
+                      key={faq.q}
+                      className="group rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 open:bg-white/[0.05]"
+                    >
+                      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold text-cream">
+                        {faq.q}
+                        <Icon
+                          name="chevron-down"
+                          className="h-3.5 w-3.5 shrink-0 text-gold-400 transition-transform duration-300 group-open:rotate-180"
+                        />
+                      </summary>
+                      <p className="mt-2.5 text-xs sm:text-sm leading-relaxed text-cream/75">{faq.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+
+          {/* Right Column: Sticky Sidebar with Pricing, CTAs & Inline Enquiry Form */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-28 bg-gradient-to-b from-ink-950 via-ink-900 to-black border border-gold-500/25 rounded-3xl p-6 shadow-2xl shadow-black/80 space-y-5">
+              {/* Pricing Box */}
+              <div className="pb-4 border-b border-white/10">
+                <span className="text-cream/50 text-[11px] uppercase tracking-wider font-semibold">
+                  Starting From
+                </span>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <span className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-gold-300 via-gold-400 to-amber-500 bg-clip-text text-transparent">
+                    {pkg.priceLabel}
+                  </span>
+                </div>
+                <p className="text-cream/60 text-xs mt-1">per person on twin sharing</p>
+              </div>
+
+              {/* Next Departure Dates */}
+              <div className="pb-4 border-b border-white/10">
+                <span className="text-cream/50 text-[11px] uppercase tracking-wider font-semibold flex items-center gap-1.5 mb-1.5">
+                  <Icon name="calendar" className="w-3.5 h-3.5 text-gold-400" />
+                  Departure Dates
+                </span>
+                <p className="text-cream text-xs sm:text-sm font-medium">
+                  Multiple upcoming dates available or custom on request.
+                </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-2.5">
+                <button
+                  type="button"
+                  onClick={() =>
+                    openEnquiry(
+                      {
+                        destination: pkg.destination,
+                        tripType: pkg.tripType.split("·")[0].trim(),
+                      },
+                      `Package · ${pkg.name}`,
+                    )
+                  }
+                  className="w-full bg-gradient-to-r from-gold-500 via-gold-400 to-amber-500 text-ink-950 py-3.5 rounded-xl font-bold text-base hover:from-gold-400 hover:to-amber-400 transition-all shadow-lg shadow-gold-500/20 block text-center cursor-pointer hover:scale-[1.02]"
+                >
+                  Book Now
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="w-full flex items-center justify-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-gold-500/30 text-gold-300 py-3 rounded-xl font-semibold text-sm transition-all cursor-pointer"
+                >
+                  <Icon name="download" className="w-4 h-4" />
+                  Download Itinerary
+                </button>
+
+                <a
+                  href={`${site.whatsappHref}?text=${whatsappMessage}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba59] text-white py-3 rounded-xl font-semibold text-sm transition-all shadow-md shadow-[#25D366]/20 hover:scale-[1.02]"
+                >
+                  <Icon name="whatsapp" className="w-4 h-4" />
+                  Chat on WhatsApp
+                </a>
+              </div>
+
+              {/* Trust badges */}
+              <div className="text-center text-cream/55 text-xs py-1">
+                <span className="text-gold-400">✦</span> Free cancellation options
+                <span className="text-gold-400 mx-1.5">✦</span> 24/7 Support
+              </div>
+
+              {/* Embedded Quick Enquiry Form */}
+              <div className="border-t border-white/10 pt-4">
+                <h4 className="font-bold text-white text-sm mb-1 flex items-center gap-2">
+                  <span className="w-1.5 h-4 bg-gold-500 rounded-sm inline-block" />
+                  Quick Enquiry
+                </h4>
+                <p className="text-cream/50 text-[11px] mb-3 truncate">{pkg.name}</p>
+
+                {formSubmitted ? (
+                  <div className="rounded-xl bg-gold-500/15 border border-gold-400/40 p-4 text-center">
+                    <p className="text-xs font-bold text-gold-300">Enquiry Received!</p>
+                    <p className="mt-1 text-[11px] text-cream/80">
+                      Our travel specialist will reach out to you within 2 hours.
+                    </p>
+                  </div>
+                ) : (
+                  <form onSubmit={handleEnquirySubmit} className="space-y-2.5">
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your Name"
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      className="w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder:text-cream/40 focus:outline-none focus:border-gold-500"
+                    />
+                    <input
+                      type="email"
+                      required
+                      placeholder="Email Address"
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      className="w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder:text-cream/40 focus:outline-none focus:border-gold-500"
+                    />
+                    <input
+                      type="tel"
+                      required
+                      placeholder="Mobile Number"
+                      value={formData.mobile}
+                      onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                      className="w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder:text-cream/40 focus:outline-none focus:border-gold-500"
+                    />
+                    <button
+                      type="submit"
+                      className="w-full bg-gradient-to-r from-gold-500 to-amber-500 text-ink-950 py-2 rounded-lg font-bold text-xs hover:from-gold-400 hover:to-amber-400 transition-all cursor-pointer shadow-md"
+                    >
+                      Submit Enquiry
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              {/* Need Help Box */}
+              <div className="border-t border-white/10 pt-4 text-xs text-cream/70 space-y-1">
+                <p className="font-semibold text-cream">Need immediate help?</p>
+                <p>
+                  Call{" "}
+                  <a href={site.phoneHref} className="text-gold-400 hover:underline">
+                    {site.phone}
+                  </a>{" "}
+                  or email{" "}
+                  <a href={site.emailHref} className="text-gold-400 hover:underline">
+                    {site.email}
+                  </a>
+                </p>
+              </div>
             </div>
-          </aside>
+          </div>
         </div>
       </div>
 
-      {/* Related */}
-      <section className="border-t border-ink-900/10 bg-white py-16 sm:py-20">
-        <div className="mx-auto max-w-[1280px] px-5 sm:px-8">
-          <SectionHeading eyebrow="You may also like" title="More trips worth taking" />
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((item, index) => (
-              <Reveal key={item.slug} delay={index * 70} className="h-full">
-                <PackageCard pkg={item} />
-              </Reveal>
+      {/* Related Packages Carousel */}
+      <section className="border-t border-white/10 py-16 sm:py-20 bg-ink-950">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <p className="text-gold-400 text-xs uppercase tracking-widest font-semibold mb-1">
+                Explore More
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-cream">
+                Other Trips Worth Taking
+              </h2>
+            </div>
+            <Link
+              to="/group-departures"
+              className="text-gold-400 hover:text-gold-300 text-sm font-semibold inline-flex items-center gap-1.5"
+            >
+              View all trips →
+            </Link>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {related.map((item) => (
+              <PackageCard key={item.slug} pkg={item} />
             ))}
           </div>
-          <p className="mt-8 text-[12.5px] text-ink-700/50">
-            * Indicative starting price per person on twin sharing — placeholder figure shown for
-            illustration. Final quote is confirmed once dates and hotels are selected.
-          </p>
         </div>
       </section>
 
-      {/* Mobile sticky CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-30 flex gap-2.5 border-t border-ink-900/10 bg-cream/95 px-4 py-3 backdrop-blur-lg lg:hidden">
-        <Button
-          variant="primary"
-          size="md"
-          className="flex-1"
+      {/* Mobile Sticky Bottom CTA */}
+      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2.5 border-t border-white/10 bg-ink-950/95 px-4 py-3 backdrop-blur-xl lg:hidden">
+        <div className="flex-1">
+          <span className="block text-[10px] uppercase tracking-wider text-cream/50 font-semibold">
+            Price
+          </span>
+          <span className="text-base font-extrabold text-gold-400">{pkg.priceLabel}</span>
+        </div>
+        <button
+          type="button"
           onClick={() =>
             openEnquiry(
               { destination: pkg.destination, tripType: pkg.tripType.split("·")[0].trim() },
               `Package mobile CTA · ${pkg.name}`,
             )
           }
+          className="flex-1 bg-gradient-to-r from-gold-500 to-amber-500 text-ink-950 py-2.5 px-4 rounded-xl font-bold text-xs text-center shadow-md cursor-pointer"
         >
-          Enquire Now
-        </Button>
-        <Button
-          variant="whatsapp"
-          size="md"
-          className="flex-1"
+          Book Now
+        </button>
+        <a
           href={`${site.whatsappHref}?text=${whatsappMessage}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp Enquiry"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#25D366] text-white shadow-md"
         >
-          Enquire on WhatsApp
-        </Button>
+          <Icon name="whatsapp" className="h-5 w-5" />
+        </a>
       </div>
-    </article>
-  );
-}
-
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} className="border-t border-ink-900/10 py-10 first:border-t-0 first:pt-0">
-      <h2 className="mb-6 text-[1.7rem] font-bold tracking-tight text-ink-900 sm:text-[2rem]">
-        {title}
-      </h2>
-      {children}
-    </section>
-  );
-}
-
-function List({
-  items,
-  tone,
-}: {
-  items: string[];
-  tone: "positive" | "neutral";
-}) {
-  return (
-    <ul className="grid gap-2.5">
-      {items.map((item) => (
-        <li key={item} className="flex items-start gap-3 text-[15px] leading-relaxed text-ink-800/85">
-          <Icon
-            name="check"
-            className={cn(
-              "mt-1 h-4 w-4 shrink-0",
-              tone === "positive" ? "text-gold-600" : "text-ink-500",
-            )}
-            strokeWidth={2.6}
-          />
-          {item}
-        </li>
-      ))}
-    </ul>
+    </div>
   );
 }

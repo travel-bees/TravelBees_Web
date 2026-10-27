@@ -20,7 +20,15 @@ function Routes() {
   const first = segments[0];
 
   useEffect(() => {
-    const target = route.anchor ?? (isHomeSection(first) ? first : undefined);
+    let target = route.anchor ?? (isHomeSection(first) ? first : undefined);
+    if (
+      target === "International" ||
+      target === "Domestic" ||
+      target === "international" ||
+      target === "domestic"
+    ) {
+      target = "inspiration";
+    }
     if (target) {
       const timer = window.setTimeout(() => scrollToId(target), 140);
       return () => window.clearTimeout(timer);

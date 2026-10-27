@@ -22,7 +22,7 @@ export function Navbar() {
 
   useEffect(() => {
     setMenuOpen(false);
-  }, [route.path]);
+  }, [route.path, route.anchor]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -85,6 +85,16 @@ export function Navbar() {
               className="hidden h-10 w-10 items-center justify-center rounded-full bg-[#25D366] text-white transition-transform duration-300 hover:scale-105 sm:inline-flex"
             >
               <Icon name="whatsapp" className="h-[18px] w-[18px]" />
+            </a>
+
+            <a
+              href={site.facebookHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow us on Facebook"
+              className="hidden h-10 w-10 items-center justify-center rounded-full bg-[#1877F2] text-white transition-transform duration-300 hover:scale-105 sm:inline-flex"
+            >
+              <Icon name="facebook" className="h-[18px] w-[18px]" />
             </a>
 
             <a

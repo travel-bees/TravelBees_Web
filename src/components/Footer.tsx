@@ -5,7 +5,7 @@ import { Link } from "./ui";
 
 const socials: { name: string; icon: IconName; href: string }[] = [
   { name: "Instagram", icon: "instagram", href: site.instagramHref },
-  { name: "Facebook", icon: "facebook", href: "https://facebook.com/" },
+  { name: "Facebook", icon: "facebook", href: site.facebookHref },
   { name: "YouTube", icon: "youtube", href: "https://youtube.com/" },
 ];
 
