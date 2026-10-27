@@ -29,8 +29,8 @@ export interface TravelPackage {
   bestTime: string;
   price: number;
   priceLabel: string;
-  imageId: number;
-  galleryIds: number[];
+  imageId: number | string;
+  galleryIds: (number | string)[];
   tagline: string;
   description: string;
   overview: string;
@@ -50,7 +50,7 @@ export interface Destination {
   slug: string;
   name: string;
   descriptor: string;
-  imageId: number;
+  imageId: number | string;
   region: "International" | "Domestic";
   bestTime: string;
   idealFor: string;
@@ -68,8 +68,8 @@ export interface GroupDeparture {
   duration: string;
   price: number;
   tripType: "International" | "Domestic" | "Safari";
-  badge?: "Limited Seats" | "Early Bird" | "Popular";
-  imageId: number;
+  badge?: "Limited Seats" | "Early Bird" | "Popular" | "Trending";
+  imageId: number | string;
   packageSlug?: string;
 }
 

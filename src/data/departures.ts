@@ -1,4 +1,7 @@
 import type { GroupDeparture } from "./types";
+import mmMain from "../images/Magical Malaysia/main.jpg";
+import teMain from "../images/Thailand Escape/main.jpg";
+import ttMain from "../images/Tropical Thailand/main.jpg";
 
 /**
  * Fixed-departure group tours.
@@ -8,7 +11,7 @@ import type { GroupDeparture } from "./types";
 export const departures: GroupDeparture[] = [
   {
     id: "th-bp-jan",
-    destination: "Thailand Escape",
+    destination: "Thailand Getaway",
     country: "Pattaya · Bangkok",
     departureDate: "05 January 2026",
     month: "January",
@@ -16,7 +19,7 @@ export const departures: GroupDeparture[] = [
     price: 61999,
     tripType: "International",
     badge: "Popular",
-    imageId: 1682794,
+    imageId: teMain,
     packageSlug: "thailand-pattaya-bangkok",
   },
   {
@@ -29,7 +32,7 @@ export const departures: GroupDeparture[] = [
     price: 54999,
     tripType: "International",
     badge: "Popular",
-    imageId: 433942,
+    imageId: mmMain,
     packageSlug: "malaysia-highlights",
   },
   {
@@ -42,8 +45,8 @@ export const departures: GroupDeparture[] = [
     price: 72999,
     tripType: "International",
     badge: "Early Bird",
-    imageId: 31833429,
-    packageSlug: "thailand-escape",
+    imageId: ttMain,
+    packageSlug: "thailand-tropical",
   },
   /* Additional group departures (temporarily paused):
   {

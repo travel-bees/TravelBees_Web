@@ -26,10 +26,6 @@ export function PackagePage({ slug }: { slug: string }) {
     terms: false,
   });
 
-  // Quick Enquiry Form state
-  const [formData, setFormData] = useState({ name: "", email: "", mobile: "" });
-  const [formSubmitted, setFormSubmitted] = useState(false);
-
   useSeo({
     title: pkg ? `${pkg.name} · ${pkg.duration} from ${pkg.priceLabel} | Travelbees` : "Trip not found | Travelbees",
     description: pkg
@@ -99,12 +95,6 @@ export function PackagePage({ slug }: { slug: string }) {
   };
 
   const allDaysExpanded = pkg.itinerary.every((d) => openDays[d.day]);
-
-  const handleEnquirySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.mobile) return;
-    setFormSubmitted(true);
-  };
 
   // Gallery images (Main + 4 thumbnails)
   const gallery = [pkg.imageId, ...(pkg.galleryIds || [])];
@@ -612,57 +602,6 @@ export function PackagePage({ slug }: { slug: string }) {
               <div className="text-center text-cream/55 text-xs py-1">
                 <span className="text-gold-400">✦</span> Free cancellation options
                 <span className="text-gold-400 mx-1.5">✦</span> 24/7 Support
-              </div>
-
-              {/* Embedded Quick Enquiry Form */}
-              <div className="border-t border-white/10 pt-4">
-                <h4 className="font-bold text-white text-sm mb-1 flex items-center gap-2">
-                  <span className="w-1.5 h-4 bg-gold-500 rounded-sm inline-block" />
-                  Quick Enquiry
-                </h4>
-                <p className="text-cream/50 text-[11px] mb-3 truncate">{pkg.name}</p>
-
-                {formSubmitted ? (
-                  <div className="rounded-xl bg-gold-500/15 border border-gold-400/40 p-4 text-center">
-                    <p className="text-xs font-bold text-gold-300">Enquiry Received!</p>
-                    <p className="mt-1 text-[11px] text-cream/80">
-                      Our travel specialist will reach out to you within 2 hours.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleEnquirySubmit} className="space-y-2.5">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Your Name"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder:text-cream/40 focus:outline-none focus:border-gold-500"
-                    />
-                    <input
-                      type="email"
-                      required
-                      placeholder="Email Address"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder:text-cream/40 focus:outline-none focus:border-gold-500"
-                    />
-                    <input
-                      type="tel"
-                      required
-                      placeholder="Mobile Number"
-                      value={formData.mobile}
-                      onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
-                      className="w-full bg-white/[0.06] border border-white/15 rounded-lg px-3 py-2 text-white text-xs placeholder:text-cream/40 focus:outline-none focus:border-gold-500"
-                    />
-                    <button
-                      type="submit"
-                      className="w-full bg-gradient-to-r from-gold-500 to-amber-500 text-ink-950 py-2 rounded-lg font-bold text-xs hover:from-gold-400 hover:to-amber-400 transition-all cursor-pointer shadow-md"
-                    >
-                      Submit Enquiry
-                    </button>
-                  </form>
-                )}
               </div>
 
               {/* Need Help Box */}

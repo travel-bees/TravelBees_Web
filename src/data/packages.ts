@@ -1,5 +1,23 @@
 import type { TravelPackage } from "./types";
 
+import mmMain from "../images/Magical Malaysia/main.jpg";
+import mm1 from "../images/Magical Malaysia/1.jpg";
+import mm2 from "../images/Magical Malaysia/2.jpg";
+import mm3 from "../images/Magical Malaysia/3.jpg";
+import mm4 from "../images/Magical Malaysia/4.jpg";
+
+import teMain from "../images/Thailand Escape/main.jpg";
+import te1 from "../images/Thailand Escape/1.jpg";
+import te2 from "../images/Thailand Escape/2.jpg";
+import te3 from "../images/Thailand Escape/3.jpg";
+import te4 from "../images/Thailand Escape/4.jpg";
+
+import ttMain from "../images/Tropical Thailand/main.jpg";
+import tt1 from "../images/Tropical Thailand/1.jpg";
+import tt2 from "../images/Tropical Thailand/2.jpg";
+import tt3 from "../images/Tropical Thailand/3.jpg";
+import tt4 from "../images/Tropical Thailand/4.jpg";
+
 /**
  * NOTE: Prices are indicative starting prices used as placeholders.
  * Swap this file for a CMS/DB collection when the real catalogue is ready.
@@ -172,85 +190,8 @@ export const packages: TravelPackage[] = [
   //   featured: true,
   // },
   {
-    slug: "thailand-escape",
-    name: "Thailand — Bangkok, Phuket & Krabi Island Escape",
-    destination: "Thailand",
-    region: "International",
-    category: "International",
-    duration: "4N / 5D",
-    nights: 4,
-    tripType: "International · Group & Private",
-    styles: ["Group Tour", "Private", "Honeymoon"],
-    startingCity: "Bengaluru (BLR)",
-    bestTime: "Nov – Mar",
-    price: 58000,
-    priceLabel: "₹58,000",
-    imageId: 31833429,
-    galleryIds: [7479103, 18304882, 33209430, 35126698],
-    tagline: "Island hops, night markets and longtail boats",
-    description:
-      "Bangkok's temples and rooftops, then Phuket and Krabi for white sand, limestone cliffs and an evening island-hopping sunset cruise.",
-    overview:
-      "A compact five-day escape that balances city energy with beach time. Two nights in Bangkok for temples, markets and rooftop views, then across to Phuket and a longtail boat day through Krabi's islands.",
-    highlights: [
-      "Longtail boat island-hopping around Krabi",
-      "Sunset views from a Bangkok rooftop bar",
-      "Thai cooking class with a market walk",
-      "Optional Phi Phi island day trip",
-    ],
-    itinerary: [
-      { day: "Day 01", title: "Arrive Bangkok", description: "Airport pickup, hotel check-in and a Chao Phraya river evening cruise." },
-      { day: "Day 02", title: "Bangkok", description: "Grand Palace, Wat Pho, Wat Arun and a night-market food crawl." },
-      { day: "Day 03", title: "Bangkok → Phuket", description: "Morning flight to Phuket, beach check-in and an evening at Patong or Kata." },
-      { day: "Day 04", title: "Krabi Islands", description: "Longtail boat through Poda, Chicken Island and Phra Nang beach." },
-      { day: "Day 05", title: "Departure", description: "Slow breakfast, last swim and airport transfer." },
-    ],
-    inclusions: [
-      "4 nights in 3–4★ hotels (2 Bangkok, 2 Phuket)",
-      "Daily breakfast",
-      "Internal flight Bangkok → Phuket",
-      "Krabi island-hopping longtail boat trip with lunch",
-      "All airport and inter-hotel transfers",
-      "Thai cooking class experience",
-    ],
-    exclusions: [
-      "International airfare",
-      "Visa-on-arrival fee (if applicable)",
-      "Lunches and dinners",
-      "Travel insurance",
-      "Optional tours, spa bookings and personal expenses",
-    ],
-    hotels: [
-      { city: "Bangkok", stay: "4★ hotel, Sukhumvit", nights: "2 nights" },
-      { city: "Phuket", stay: "4★ beach resort, Kata", nights: "2 nights" },
-    ],
-    experiences: [
-      "Thai green curry cooking class",
-      "Muay Thai match watching (optional)",
-      "Floating market morning visit (optional)",
-      "Couple's spa package add-on",
-    ],
-    importantInfo: [
-      "Check current visa rules for Indian passport holders before booking — Thailand updates its visa-exemption and visa-on-arrival policy periodically.",
-      "Island boats may be cancelled in rough seas; alternatives will be arranged.",
-      "Dress modestly when visiting temples (covered shoulders and knees).",
-    ],
-    cancellation: [
-      "30+ days before departure: 20% of trip cost retained",
-      "15–29 days before departure: 50% of trip cost retained",
-      "Within 14 days: non-refundable",
-      "Internal flights are non-refundable once ticketed.",
-    ],
-    faqs: [
-      { q: "Is Thailand budget-friendly for Indians?", a: "Yes — flights are short and frequent, and the rupee stretches well on food, transport and stays." },
-      { q: "Best month for a Thailand trip?", a: "November to March brings dry, sunny weather on both coasts." },
-      { q: "Can you make this a honeymoon trip?", a: "We can upgrade to beach villas, add a private sunset cruise and arrange candlelight dinners." },
-    ],
-    featured: true,
-  },
-  {
     slug: "thailand-pattaya-bangkok",
-    name: "Thailand Escape",
+    name: "Thailand Getaway",
     destination: "Thailand",
     region: "International",
     category: "International",
@@ -262,8 +203,8 @@ export const packages: TravelPackage[] = [
     bestTime: "Year-Round · Nov – Apr",
     price: 61999,
     priceLabel: "₹61,999",
-    imageId: 1682794,
-    galleryIds: [7479103, 1008155, 2166559, 1483053],
+    imageId: teMain,
+    galleryIds: [te1, te2, te3, te4],
     tagline: "Coral Island, Alcazar Show, Safari World & Chao Phraya Dinner Cruise",
     description:
       "Experience the vibrant buzz of Thailand — Tiger Park, Coral Island speedboat tour, and the dazzling Alcazar Show in Pattaya, followed by Nong Nooch Village, a luxury Chao Phraya dinner cruise, and Safari World in Bangkok.",
@@ -360,6 +301,83 @@ export const packages: TravelPackage[] = [
       { q: "Is this package suitable for families with young children or elders?", a: "Absolutely. With private AC transfers, included meals, and family favorites like Safari World, Nong Nooch Village, and Coral Island, it is one of our top-rated family holidays." },
       { q: "Can we book water sports in advance at Coral Island?", a: "You can book optional watersports (parasailing, jet skiing, banana boat rides, undersea walking) directly on the island through your tour coordinator at reasonable rates." },
       { q: "Can we extend this trip or add extra nights?", a: "Yes, we can easily add extra nights in Bangkok for shopping at Chatuchak or Pratunam, or connect this tour to Phuket and Krabi." },
+    ],
+    featured: true,
+  },
+  {
+    slug: "thailand-tropical",
+    name: "Tropical Thailand",
+    destination: "Thailand",
+    region: "International",
+    category: "International",
+    duration: "4N / 5D",
+    nights: 4,
+    tripType: "International · Group & Private",
+    styles: ["Group Tour", "Private", "Honeymoon"],
+    startingCity: "Bengaluru (BLR)",
+    bestTime: "Nov – Mar",
+    price: 71999,
+    priceLabel: "₹71,999",
+    imageId: ttMain,
+    galleryIds: [tt1, tt2, tt3, tt4],
+    tagline: "Island hops, night markets and longtail boats",
+    description:
+      "Bangkok's temples and rooftops, then Phuket and Krabi for white sand, limestone cliffs and an evening island-hopping sunset cruise.",
+    overview:
+      "A compact five-day escape that balances city energy with beach time. Two nights in Bangkok for temples, markets and rooftop views, then across to Phuket and a longtail boat day through Krabi's islands.",
+    highlights: [
+      "Longtail boat island-hopping around Krabi",
+      "Sunset views from a Bangkok rooftop bar",
+      "Thai cooking class with a market walk",
+      "Optional Phi Phi island day trip",
+    ],
+    itinerary: [
+      { day: "Day 01", title: "Arrive Bangkok", description: "Airport pickup, hotel check-in and a Chao Phraya river evening cruise." },
+      { day: "Day 02", title: "Bangkok", description: "Grand Palace, Wat Pho, Wat Arun and a night-market food crawl." },
+      { day: "Day 03", title: "Bangkok → Phuket", description: "Morning flight to Phuket, beach check-in and an evening at Patong or Kata." },
+      { day: "Day 04", title: "Krabi Islands", description: "Longtail boat through Poda, Chicken Island and Phra Nang beach." },
+      { day: "Day 05", title: "Departure", description: "Slow breakfast, last swim and airport transfer." },
+    ],
+    inclusions: [
+      "4 nights in 3–4★ hotels (2 Bangkok, 2 Phuket)",
+      "Daily breakfast",
+      "Internal flight Bangkok → Phuket",
+      "Krabi island-hopping longtail boat trip with lunch",
+      "All airport and inter-hotel transfers",
+      "Thai cooking class experience",
+    ],
+    exclusions: [
+      "International airfare",
+      "Visa-on-arrival fee (if applicable)",
+      "Lunches and dinners",
+      "Travel insurance",
+      "Optional tours, spa bookings and personal expenses",
+    ],
+    hotels: [
+      { city: "Bangkok", stay: "4★ hotel, Sukhumvit", nights: "2 nights" },
+      { city: "Phuket", stay: "4★ beach resort, Kata", nights: "2 nights" },
+    ],
+    experiences: [
+      "Thai green curry cooking class",
+      "Muay Thai match watching (optional)",
+      "Floating market morning visit (optional)",
+      "Couple's spa package add-on",
+    ],
+    importantInfo: [
+      "Check current visa rules for Indian passport holders before booking — Thailand updates its visa-exemption and visa-on-arrival policy periodically.",
+      "Island boats may be cancelled in rough seas; alternatives will be arranged.",
+      "Dress modestly when visiting temples (covered shoulders and knees).",
+    ],
+    cancellation: [
+      "30+ days before departure: 20% of trip cost retained",
+      "15–29 days before departure: 50% of trip cost retained",
+      "Within 14 days: non-refundable",
+      "Internal flights are non-refundable once ticketed.",
+    ],
+    faqs: [
+      { q: "Is Thailand budget-friendly for Indians?", a: "Yes — flights are short and frequent, and the rupee stretches well on food, transport and stays." },
+      { q: "Best month for a Thailand trip?", a: "November to March brings dry, sunny weather on both coasts." },
+      { q: "Can you make this a honeymoon trip?", a: "We can upgrade to beach villas, add a private sunset cruise and arrange candlelight dinners." },
     ],
     featured: true,
   },
@@ -923,20 +941,20 @@ export const packages: TravelPackage[] = [
   // },
   {
     slug: "malaysia-highlights",
-    name: "Malaysia — Kuala Lumpur & Penang",
+    name: "Magical Malaysia",
     destination: "Malaysia",
     region: "International",
     category: "International",
-    duration: "4N / 5D",
-    nights: 4,
+    duration: "3N / 4D",
+    nights: 3,
     tripType: "International · City & Culture",
     styles: ["Family", "Group Tour", "Private"],
     startingCity: "Bengaluru (BLR)",
     bestTime: "Year-Round",
     price: 62000,
     priceLabel: "₹62,000",
-    imageId: 433942,
-    galleryIds: [18662417, 33209430],
+    imageId: mmMain,
+    galleryIds: [mm1, mm2, mm3, mm4],
     tagline: "Petronas Towers, Batu Caves and Penang heritage food",
     description:
       "Climb the colorful steps of Batu Caves, marvel at the Petronas Twin Towers, and savor Michelin-celebrated street delicacies in Penang.",
@@ -974,5 +992,12 @@ export const packages: TravelPackage[] = [
   },
 ];
 
-export const getPackage = (slug: string) => packages.find((p) => p.slug === slug);
+export const getPackage = (slug: string) =>
+  packages.find(
+    (p) =>
+      p.slug === slug ||
+      (slug === "thailand-escape" && (p.slug === "thailand-pattaya-bangkok" || p.slug === "thailand-tropical" || p.slug === "thailand-escape")) ||
+      (slug === "thailand-pattaya-bangkok" && (p.slug === "thailand-escape" || p.slug === "thailand-pattaya-bangkok")) ||
+      (slug === "thailand-tropical" && (p.slug === "thailand-escape" || p.slug === "thailand-tropical"))
+  );
 export const featuredPackages = packages.filter((p) => p.featured);
