@@ -4,10 +4,10 @@ import { Badge, Button } from "./ui";
 import { site } from "../data/site";
 import { Icon } from "./Icon";
 
-const badgeTone: Record<string, "gold" | "danger" | "light"> = {
+const badgeTone: Record<string, "gold" | "danger" | "light" | "emerald" | "amber"> = {
   "Limited Seats": "danger",
-  "Early Bird": "gold",
-  Popular: "light",
+  "Early Bird": "emerald",
+  Popular: "gold",
 };
 
 export function GroupTourCard({ departure }: { departure: GroupDeparture }) {

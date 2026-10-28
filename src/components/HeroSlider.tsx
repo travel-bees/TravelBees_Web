@@ -3,7 +3,7 @@ import { promotions } from "../data/promotions";
 import { px, pxSrcSet } from "../lib/media";
 import { Icon } from "./Icon";
 
-const AUTOPLAY_MS = 3000;
+const AUTOPLAY_MS = 2000;
 
 interface HeroSliderProps {
   children?: ReactNode;
@@ -71,19 +71,19 @@ export function HeroSlider({ children }: HeroSliderProps) {
             src={px(promo.imageId, 1920, 1200)}
             srcSet={pxSrcSet(promo.imageId, 1200)}
             sizes="100vw"
-            alt={promo.title}
+            alt={promo.title || `Travelbees Hero Slide ${index + 1}`}
             loading={index === 0 ? "eager" : "lazy"}
             fetchPriority={index === 0 ? "high" : undefined}
             decoding="async"
-            className={`h-full w-full object-cover ${
-              index === active ? "ken-burns" : "scale-105"
+            className={`h-full w-full object-cover object-top origin-top ${
+              index === active ? "ken-burns" : "scale-100"
             }`}
           />
         </div>
       ))}
 
       {/* Subtle overlay to highlight images while keeping navbar and controls legible */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/60 via-transparent to-ink-950/80" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/35 via-transparent to-ink-950/75" />
 
       {/* Navigation arrows (desktop & tablet) */}
       <button

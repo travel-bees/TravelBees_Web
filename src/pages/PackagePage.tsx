@@ -14,6 +14,10 @@ export function PackagePage({ slug }: { slug: string }) {
   const pkg = getPackage(slug);
   const { openEnquiry } = useApp();
 
+  const isGroupTour =
+    pkg?.styles?.some((s) => s.toLowerCase().includes("group")) ||
+    pkg?.tripType?.toLowerCase().includes("group");
+
   // Accordion state for itinerary days
   const [openDays, setOpenDays] = useState<Record<string, boolean>>({
     "Day 01": true,
@@ -274,9 +278,9 @@ export function PackagePage({ slug }: { slug: string }) {
 
                           {/* Quick details */}
                           <div className="flex flex-wrap items-center gap-2 text-xs pt-1">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20 font-medium">
                               <Icon name="utensils" className="w-3 h-3 text-gold-400" />
-                              Breakfast Included
+                              {day.meals || (isGroupTour ? "All Meals Included" : "Breakfast Included")}
                             </span>
                             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 text-cream/75 border border-white/10">
                               <Icon name="hotel" className="w-3 h-3 text-gold-400" />

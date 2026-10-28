@@ -1,51 +1,25 @@
 import type { Destination } from "./types";
+import baliImg from "../images/International/Bali.jpg";
+import dubaiImg from "../images/International/Dubai.jpg";
+import japanImg from "../images/International/Japan.jfif";
+import malaysiaImg from "../images/International/Malaysia.jpg";
+import singaporeImg from "../images/International/Singapore.jpg";
+import thailandImg from "../images/International/Thailand.jfif";
+import vietnamImg from "../images/International/Vietnam.avif";
+import andamanImg from "../images/Domestic/Andaman.jpg";
+import keralaImg from "../images/Domestic/Kerela.jpg";
+import rajasthanImg from "../images/Domestic/Rajasthan.jpg";
+import kashmirImg from "../images/Domestic/Kashmir.jpg";
+import goaImg from "../images/Domestic/Goa.jfif";
+import meghalayaImg from "../images/Domestic/Meghalaya.jpg";
 
 /** Destination discovery data — international. */
 export const internationalDestinations: Destination[] = [
   {
-    slug: "japan",
-    name: "Japan",
-    descriptor: "Cherry blossoms & neon cities",
-    imageId: 4058530,
-    region: "International",
-    bestTime: "Mar – May · Oct – Nov",
-    idealFor: "Couples, solo travellers, photographers",
-    startingPrice: 185000,
-    blurb:
-      "A country where a 400-year-old shrine sits around the corner from a robot restaurant. Japan rewards slow travellers — the tea houses, the trains that run to the second, the seasonal food.",
-    highlights: ["Kyoto temple trail", "Shinkansen rail journey", "Hakone onsen ryokan"],
-  },
-  {
-    slug: "vietnam",
-    name: "Vietnam",
-    descriptor: "Limestone bays & lantern streets",
-    imageId: 37888225,
-    region: "International",
-    bestTime: "Oct – Apr",
-    idealFor: "Backpackers, couples, food lovers",
-    startingPrice: 72000,
-    blurb:
-      "Ha Long Bay at sunrise, Hoi An's lantern lanes and a bowl of pho for breakfast. Vietnam is the rare place that is both budget-friendly and genuinely spectacular.",
-    highlights: ["Ha Long Bay cruise", "Hoi An ancient town", "Hanoi street food"],
-  },
-  {
-    slug: "singapore",
-    name: "Singapore",
-    descriptor: "Gardens, hawkers & skyline",
-    imageId: 18662417,
-    region: "International",
-    bestTime: "Feb – Apr · Jul – Sep",
-    idealFor: "Families with kids, short breaks",
-    startingPrice: 68000,
-    blurb:
-      "Clean, easy and endlessly entertaining — Universal Studios, the SuperTree Grove and hawker centres where a Michelin plate of chicken rice costs less than a cinema ticket.",
-    highlights: ["Gardens by the Bay", "Sentosa island day", "Hawker centre food trail"],
-  },
-  {
     slug: "thailand",
     name: "Thailand",
-    descriptor: "Islands, temples & night markets",
-    imageId: 7479103,
+    descriptor: "Land of Smiles",
+    imageId: thailandImg,
     region: "International",
     bestTime: "Nov – Mar",
     idealFor: "Friends, honeymooners, families",
@@ -57,8 +31,8 @@ export const internationalDestinations: Destination[] = [
   {
     slug: "malaysia",
     name: "Malaysia",
-    descriptor: "Twin towers & tea hills",
-    imageId: 433942,
+    descriptor: "Wonders in Harmony",
+    imageId: malaysiaImg,
     region: "International",
     bestTime: "Dec – Feb · Jun – Aug",
     idealFor: "Families, couples, short breaks",
@@ -68,23 +42,23 @@ export const internationalDestinations: Destination[] = [
     highlights: ["Petronas Towers", "Batu Caves", "Penang street art & food"],
   },
   {
-    slug: "bali",
-    name: "Bali",
-    descriptor: "Rice terraces & beach clubs",
-    imageId: 15994332,
+    slug: "singapore",
+    name: "Singapore",
+    descriptor: "Where Magic Meets Modernity",
+    imageId: singaporeImg,
     region: "International",
-    bestTime: "Apr – Oct",
-    idealFor: "Couples, honeymooners, groups",
-    startingPrice: 78000,
+    bestTime: "Feb – Apr · Jul – Sep",
+    idealFor: "Families with kids, short breaks",
+    startingPrice: 68000,
     blurb:
-      "Ubud's jungle temples and rice terraces for the mornings, Seminyak's beach clubs for the evenings. Bali is the honeymoon we book most after the Maldives.",
-    highlights: ["Ubud rice terraces", "Uluwatu cliff temple", "Nusa Penida day trip"],
+      "Clean, easy and endlessly entertaining — Universal Studios, the SuperTree Grove and hawker centres where a Michelin plate of chicken rice costs less than a cinema ticket.",
+    highlights: ["Gardens by the Bay", "Sentosa island day", "Hawker centre food trail"],
   },
   {
     slug: "dubai",
     name: "Dubai",
-    descriptor: "Skylines, deserts & shopping",
-    imageId: 19664340,
+    descriptor: "Oasis of Luxury & Adventure",
+    imageId: dubaiImg,
     region: "International",
     bestTime: "Nov – Mar",
     idealFor: "Families, shopping trips, luxury",
@@ -94,22 +68,9 @@ export const internationalDestinations: Destination[] = [
     highlights: ["Desert safari & dune drive", "Burj Khalifa observatory", "Old Dubai souks"],
   },
   {
-    slug: "europe",
-    name: "Europe",
-    descriptor: "Alpine lakes & old towns",
-    imageId: 4050794,
-    region: "International",
-    bestTime: "Apr – Jun · Sep – Oct",
-    idealFor: "Honeymooners, families, first-timers",
-    startingPrice: 245000,
-    blurb:
-      "Swiss lakes and alpine rail, Parisian mornings, Italian evenings. Europe is a big-ticket holiday, so we plan it carefully — routing, rail passes and the right hotels.",
-    highlights: ["Swiss alpine rail", "Paris city break", "Italian lakes"],
-  },
-  {
     slug: "kenya",
     name: "Kenya",
-    descriptor: "Safaris & the great migration",
+    descriptor: "Call of the Wild",
     imageId: 20501201,
     region: "International",
     bestTime: "Jul – Oct",
@@ -119,6 +80,60 @@ export const internationalDestinations: Destination[] = [
       "Dawn game drives in the Masai Mara, hot-air balloons over the plains and tented camps under a sky absolutely full of stars. The trip people talk about for decades.",
     highlights: ["Masai Mara game drives", "Balloon safari option", "Lake Naivasha"],
   },
+  {
+    slug: "bali",
+    name: "Bali",
+    descriptor: "Island of Dreams",
+    imageId: baliImg,
+    region: "International",
+    bestTime: "Apr – Oct",
+    idealFor: "Couples, honeymooners, groups",
+    startingPrice: 78000,
+    blurb:
+      "Ubud's jungle temples and rice terraces for the mornings, Seminyak's beach clubs for the evenings. Bali is the honeymoon we book most after the Maldives.",
+    highlights: ["Ubud rice terraces", "Uluwatu cliff temple", "Nusa Penida day trip"],
+  },
+  {
+    slug: "vietnam",
+    name: "Vietnam",
+    descriptor: "Land of Timeless Charm",
+    imageId: vietnamImg,
+    region: "International",
+    bestTime: "Oct – Apr",
+    idealFor: "Backpackers, couples, food lovers",
+    startingPrice: 72000,
+    blurb:
+      "Ha Long Bay at sunrise, Hoi An's lantern lanes and a bowl of pho for breakfast. Vietnam is the rare place that is both budget-friendly and genuinely spectacular.",
+    highlights: ["Ha Long Bay cruise", "Hoi An ancient town", "Hanoi street food"],
+  },
+  {
+    slug: "japan",
+    name: "Japan",
+    descriptor: "Where Dreams Blossom",
+    imageId: japanImg,
+    region: "International",
+    bestTime: "Mar – May · Oct – Nov",
+    idealFor: "Couples, solo travellers, photographers",
+    startingPrice: 185000,
+    isComingSoon: true,
+    blurb:
+      "A country where a 400-year-old shrine sits around the corner from a robot restaurant. Japan rewards slow travellers — the tea houses, the trains that run to the second, the seasonal food.",
+    highlights: ["Kyoto temple trail", "Shinkansen rail journey", "Hakone onsen ryokan"],
+  },
+  {
+    slug: "europe",
+    name: "Europe",
+    descriptor: "Timeless Adventures",
+    imageId: 4050794,
+    region: "International",
+    bestTime: "Apr – Jun · Sep – Oct",
+    idealFor: "Honeymooners, families, first-timers",
+    startingPrice: 245000,
+    isComingSoon: true,
+    blurb:
+      "Swiss lakes and alpine rail, Parisian mornings, Italian evenings. Europe is a big-ticket holiday, so we plan it carefully — routing, rail passes and the right hotels.",
+    highlights: ["Swiss alpine rail", "Paris city break", "Italian lakes"],
+  },
 ];
 
 /** Destination discovery data — domestic. */
@@ -127,7 +142,7 @@ export const domesticDestinations: Destination[] = [
     slug: "andaman",
     name: "Andaman",
     descriptor: "Turquoise water & white sand",
-    imageId: 7898444,
+    imageId: andamanImg,
     region: "Domestic",
     bestTime: "Oct – May",
     idealFor: "Couples, families, honeymooners",
@@ -140,11 +155,12 @@ export const domesticDestinations: Destination[] = [
     slug: "kerala",
     name: "Kerala",
     descriptor: "Backwaters & tea hills",
-    imageId: 12950219,
+    imageId: keralaImg,
     region: "Domestic",
     bestTime: "Sep – Mar",
     idealFor: "Families, couples, senior travellers",
     startingPrice: 38000,
+    isComingSoon: true,
     blurb:
       "A houseboat night on the Alleppey backwaters, Munnar's tea rows and Fort Kochi's cafés. God's Own Country is still the easiest family holiday in India.",
     highlights: ["Alleppey houseboat", "Munnar tea estates", "Kathakali & Ayurveda"],
@@ -153,11 +169,12 @@ export const domesticDestinations: Destination[] = [
     slug: "rajasthan",
     name: "Rajasthan",
     descriptor: "Forts, palaces & desert nights",
-    imageId: 18881277,
+    imageId: rajasthanImg,
     region: "Domestic",
     bestTime: "Oct – Mar",
     idealFor: "Families, groups, culture lovers",
     startingPrice: 54000,
+    isComingSoon: true,
     blurb:
       "Pink cities, blue lanes and golden dunes. Rajasthan is India at its most cinematic — and the food and heritage hotels are half the reason to go.",
     highlights: ["Amber Fort", "Jaisalmer desert camp", "Udaipur lake palaces"],
@@ -166,11 +183,12 @@ export const domesticDestinations: Destination[] = [
     slug: "kashmir",
     name: "Kashmir",
     descriptor: "Dal Lake shikaras & meadows",
-    imageId: 16498513,
+    imageId: kashmirImg,
     region: "Domestic",
     bestTime: "Apr – Oct",
     idealFor: "Couples, families, honeymooners",
     startingPrice: 46000,
+    isComingSoon: true,
     blurb:
       "A shikara at sunset on Dal Lake, Gulmarg's meadow gondola and houseboat mornings with kahwa. Our most requested domestic honeymoon after Kerala.",
     highlights: ["Dal Lake shikara ride", "Gulmarg gondola", "Pahalgam valleys"],
@@ -184,6 +202,7 @@ export const domesticDestinations: Destination[] = [
     bestTime: "Mar – Jun · Oct – Feb",
     idealFor: "Friends, families, road-trippers",
     startingPrice: 32000,
+    isComingSoon: true,
     blurb:
       "Manali's snowline, Kasol's riverside cafés and Spiti's moonscape roads. The best-value mountain holiday you can take from Bengaluru.",
     highlights: ["Manali & Solang", "Old Manali cafés", "Spiti valley circuit"],
@@ -192,11 +211,12 @@ export const domesticDestinations: Destination[] = [
     slug: "goa",
     name: "Goa",
     descriptor: "Beaches, shacks & sunsets",
-    imageId: 39182453,
+    imageId: goaImg,
     region: "Domestic",
     bestTime: "Nov – Feb",
     idealFor: "Friends, families, weekend breaks",
     startingPrice: 24000,
+    isComingSoon: true,
     blurb:
       "North Goa for the noise, south Goa for the quiet. Either way: seafood shacks, Portuguese churches and a sunset that needs no filter.",
     highlights: ["Palolem & Agonda beaches", "Fontainhas Latin quarter", "Anjuna flea market"],
@@ -205,28 +225,29 @@ export const domesticDestinations: Destination[] = [
     slug: "meghalaya",
     name: "Meghalaya",
     descriptor: "Waterfalls & living bridges",
-    imageId: 12233686,
+    imageId: meghalayaImg,
     region: "Domestic",
     bestTime: "Sep – May",
     idealFor: "Friends, adventure seekers",
     startingPrice: 36000,
+    isComingSoon: true,
     blurb:
       "The wettest place on earth, and the greenest. Nohkalikai Falls, double-decker root bridges and caves that will test your nerves in the best way.",
     highlights: ["Nohkalikai Falls", "Nongriat root bridge trek", "Dawki umngot river"],
   },
-  {
-    slug: "uttarakhand",
-    name: "Uttarakhand",
-    descriptor: "Ganges ghats & Himalayan air",
-    imageId: 38044214,
-    region: "Domestic",
-    bestTime: "Mar – Jun · Sep – Nov",
-    idealFor: "Families, pilgrims, trekkers",
-    startingPrice: 28000,
-    blurb:
-      "Rishikesh's evening aarti, Nainital's lake and Auli's ski slopes. Close enough for a long weekend, beautiful enough for a full week.",
-    highlights: ["Rishikesh Ganga aarti", "Nainital & Bhimtal", "Auli skiing"],
-  },
+  // {
+  //   slug: "uttarakhand",
+  //   name: "Uttarakhand",
+  //   descriptor: "Ganges ghats & Himalayan air",
+  //   imageId: 38044214,
+  //   region: "Domestic",
+  //   bestTime: "Mar – Jun · Sep – Nov",
+  //   idealFor: "Families, pilgrims, trekkers",
+  //   startingPrice: 28000,
+  //   blurb:
+  //     "Rishikesh's evening aarti, Nainital's lake and Auli's ski slopes. Close enough for a long weekend, beautiful enough for a full week.",
+  //   highlights: ["Rishikesh Ganga aarti", "Nainital & Bhimtal", "Auli skiing"],
+  // },
 ];
 
 export const allDestinations = [...internationalDestinations, ...domesticDestinations];

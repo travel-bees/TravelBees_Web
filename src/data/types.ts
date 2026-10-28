@@ -2,6 +2,7 @@ export interface ItineraryDay {
   day: string;
   title: string;
   description: string;
+  meals?: string;
 }
 
 export interface Hotel {
@@ -57,6 +58,7 @@ export interface Destination {
   startingPrice: number;
   blurb: string;
   highlights: string[];
+  isComingSoon?: boolean;
 }
 
 export interface GroupDeparture {

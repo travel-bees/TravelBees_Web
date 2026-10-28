@@ -300,20 +300,22 @@ export function Badge({
   className,
 }: {
   children: ReactNode;
-  tone?: "neutral" | "gold" | "light" | "danger";
+  tone?: "neutral" | "gold" | "light" | "danger" | "emerald" | "amber";
   className?: string;
 }) {
   const tones = {
     neutral: "bg-ink-900/10 text-ink-800",
-    gold: "bg-gold-500 text-ink-950",
+    gold: "bg-gold-500 text-ink-950 font-bold shadow-md",
     light: "bg-white/15 text-cream backdrop-blur-sm",
-    danger: "bg-[#c0392b] text-white",
+    danger: "bg-[#c0392b] text-white font-bold shadow-md",
+    emerald: "bg-emerald-600 text-white font-semibold shadow-md",
+    amber: "bg-amber-500 text-ink-950 font-bold shadow-md",
   };
   return (
     <span
       className={cn(
         "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em]",
-        tones[tone],
+        tones[tone] || tones.neutral,
         className,
       )}
     >

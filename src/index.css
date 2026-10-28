@@ -91,6 +91,7 @@
   }
 
   .ken-burns {
+    transform-origin: top center;
     animation: ken-burns 24s ease-out both;
   }
 
@@ -132,7 +133,7 @@
 
 @keyframes ken-burns {
   from {
-    transform: scale(1.12);
+    transform: scale(1.06);
   }
   to {
     transform: scale(1);

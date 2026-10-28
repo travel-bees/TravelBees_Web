@@ -38,8 +38,8 @@ export function Home() {
       <Hero />
       <GroupDepartures />
       {/* <FeaturedPackages /> — "Trips Worth Taking" (commented out) */}
-      <CustomTripSection />
       <InspirationSection />
+      <CustomTripSection />
       <WhyChooseUs />
       <TrustBar />
       <HowItWorks />

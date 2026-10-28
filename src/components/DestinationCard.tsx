@@ -34,9 +34,15 @@ export function DestinationCard({
         <p className="mt-1 text-[13.5px] text-cream/70">{destination.descriptor}</p>
 
         <div className="pt-3 lg:hidden">
-          <span className="inline-flex rounded-full bg-gold-500 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-ink-950">
-            Explore
-          </span>
+          {destination.isComingSoon ? (
+            <span className="inline-flex rounded-full border border-gold-400/40 bg-gold-500/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em] text-gold-300">
+              Coming Soon
+            </span>
+          ) : (
+            <span className="inline-flex rounded-full bg-gold-500 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-ink-950">
+              Explore
+            </span>
+          )}
         </div>
 
         <div className="hidden lg:grid lg:max-h-0 lg:overflow-hidden lg:opacity-0 lg:transition-all lg:duration-500 lg:ease-[cubic-bezier(0.16,1,0.3,1)] lg:group-hover:max-h-40 lg:group-hover:opacity-100">
@@ -52,9 +58,15 @@ export function DestinationCard({
               ))}
             </div>
             <div className="mt-4">
-              <Button href={`/destinations/${destination.slug}`} size="sm" variant="primary">
-                Explore {destination.name}
-              </Button>
+              {destination.isComingSoon ? (
+                <span className="inline-flex items-center rounded-full border border-gold-400/40 bg-gold-500/20 px-4 py-1.5 text-[11.5px] font-bold uppercase tracking-wider text-gold-300">
+                  Coming Soon
+                </span>
+              ) : (
+                <Button href={`/destinations/${destination.slug}`} size="sm" variant="primary">
+                  Explore {destination.name}
+                </Button>
+              )}
             </div>
           </div>
         </div>

@@ -41,7 +41,7 @@ export const departures: GroupDeparture[] = [
     country: "Phuket · Krabi",
     departureDate: "28 January 2026",
     month: "January",
-    duration: "4N / 5D",
+    duration: "5N / 6D",
     price: 72999,
     tripType: "International",
     badge: "Early Bird",
