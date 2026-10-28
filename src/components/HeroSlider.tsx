@@ -75,7 +75,7 @@ export function HeroSlider({ children }: HeroSliderProps) {
             loading={index === 0 ? "eager" : "lazy"}
             fetchPriority={index === 0 ? "high" : undefined}
             decoding="async"
-            className={`h-full w-full object-cover object-top origin-top ${
+            className={`h-full w-full object-cover object-[center_22%] sm:object-top origin-center sm:origin-top ${
               index === active ? "ken-burns" : "scale-100"
             }`}
           />
@@ -83,7 +83,7 @@ export function HeroSlider({ children }: HeroSliderProps) {
       ))}
 
       {/* Subtle overlay to highlight images while keeping navbar and controls legible */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/35 via-transparent to-ink-950/75" />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ink-950/40 via-transparent via-40% to-ink-950/80 sm:from-ink-950/35 sm:to-ink-950/75" />
 
       {/* Navigation arrows (desktop & tablet) */}
       <button
@@ -104,10 +104,10 @@ export function HeroSlider({ children }: HeroSliderProps) {
       </button>
 
       {/* Bottom controls & Action buttons */}
-      <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end px-5 pb-10 sm:pb-14">
+      <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-end px-4 pb-6 sm:px-5 sm:pb-12">
         {/* Slide indicators */}
         <div
-          className="mb-5 flex items-center gap-2"
+          className="mb-3.5 sm:mb-5 flex items-center gap-1.5 sm:gap-2"
           role="tablist"
           aria-label="Choose hero slide"
         >

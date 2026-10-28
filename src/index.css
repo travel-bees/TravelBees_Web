@@ -91,8 +91,13 @@
   }
 
   .ken-burns {
-    transform-origin: top center;
+    transform-origin: center 20%;
     animation: ken-burns 24s ease-out both;
+  }
+  @media (min-width: 640px) {
+    .ken-burns {
+      transform-origin: top center;
+    }
   }
 
   .text-balance {
