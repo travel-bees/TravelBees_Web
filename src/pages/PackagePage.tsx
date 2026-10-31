@@ -1,4 +1,5 @@
 import { useState } from "react";
+import logo from "../assets/logo.png";
 import { getPackage, packages } from "../data/packages";
 import { site } from "../data/site";
 import { useApp } from "../lib/app-context";
@@ -100,6 +101,20 @@ export function PackagePage({ slug }: { slug: string }) {
 
   const allDaysExpanded = pkg.itinerary.every((d) => openDays[d.day]);
 
+  const handleDownloadItinerary = () => {
+    // Expand all days and all policies so the full itinerary is rendered
+    toggleAllDays(true);
+    setOpenPolicies({ cancellation: true, terms: true });
+    const originalTitle = document.title;
+    document.title = `${pkg.name} - ${pkg.duration} Itinerary | Travelbees`;
+    setTimeout(() => {
+      window.print();
+      setTimeout(() => {
+        document.title = originalTitle;
+      }, 1500);
+    }, 120);
+  };
+
   // Gallery images (Main + 4 thumbnails)
   const gallery = [pkg.imageId, ...(pkg.galleryIds || [])];
   const mainImage = gallery[0];
@@ -123,9 +138,94 @@ export function PackagePage({ slug }: { slug: string }) {
   ];
 
   return (
-    <div className="bg-ink-950 text-cream min-h-screen pb-24 lg:pb-16">
+    <div className="bg-ink-950 text-cream min-h-screen pb-24 lg:pb-16 print:bg-white print:text-ink-950 print:pb-0">
+      {/* Official Printable Itinerary Header (Visible ONLY on print / download) */}
+      <div className="hidden print:block border-b-2 border-gold-600 pb-5 mb-6 text-ink-950 pt-2">
+        <div className="flex items-center justify-between gap-6">
+          {/* Left side: TravelBees Logo & Branding */}
+          <div className="flex items-center gap-4">
+            <img
+              src={logo}
+              alt="Travelbees Logo"
+              className="h-16 w-auto object-contain"
+            />
+            <div>
+              <div className="text-2xl font-black tracking-tight text-ink-950 flex items-center gap-1.5 leading-none">
+                <span>TRAVEL</span>
+                <span className="text-amber-600">BEES</span>
+              </div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-600 mt-1">
+                Tours · Holidays · Experiences
+              </p>
+              <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                Curated International &amp; Domestic Journeys
+              </p>
+            </div>
+          </div>
+
+          {/* Right side: Contact Details with Logos / Icons */}
+          <div className="flex flex-col items-end text-xs text-ink-900 leading-normal shrink-0 space-y-1.5">
+            <div className="flex items-center gap-1.5 font-semibold text-ink-950 text-[13px]">
+              <span className="flex items-center gap-1 text-emerald-600">
+                <Icon name="whatsapp" className="w-3.5 h-3.5" />
+                <Icon name="phone" className="w-3 h-3 text-ink-700" />
+              </span>
+              <span>{site.phone}</span>
+            </div>
+
+            <div className="flex items-center gap-1.5 text-ink-700 text-xs">
+              <Icon name="mail" className="w-3.5 h-3.5 text-amber-700" />
+              <span>{site.email}</span>
+            </div>
+
+            <div className="flex items-center gap-1.5 text-ink-700 text-xs">
+              <Icon name="globe" className="w-3.5 h-3.5 text-amber-700" />
+              <span>travelbees.in</span>
+            </div>
+
+            <div className="flex items-center gap-1.5 text-slate-500 text-[11px]">
+              <Icon name="pin" className="w-3 h-3 text-slate-400" />
+              <span>Bengaluru, Karnataka, India</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-5 rounded-xl border border-slate-300 bg-slate-50 p-4">
+          <div className="flex items-baseline justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-black text-ink-950">{pkg.name}</h1>
+              <p className="text-xs text-ink-700 mt-0.5">{pkg.tagline}</p>
+            </div>
+            <div className="text-right shrink-0">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">Package Cost</span>
+              <span className="text-2xl font-black text-amber-700">{pkg.priceLabel}</span>
+              <span className="text-[11px] text-slate-500 block">per person on twin sharing</span>
+            </div>
+          </div>
+
+          <div className="mt-4 grid grid-cols-4 gap-2 border-t border-slate-200 pt-3 text-xs">
+            <div>
+              <span className="text-slate-500 font-semibold uppercase text-[10px] block">Duration</span>
+              <span className="font-bold text-ink-900">{pkg.duration}</span>
+            </div>
+            <div>
+              <span className="text-slate-500 font-semibold uppercase text-[10px] block">Destination</span>
+              <span className="font-bold text-ink-900">{pkg.destination}</span>
+            </div>
+            <div>
+              <span className="text-slate-500 font-semibold uppercase text-[10px] block">Departure</span>
+              <span className="font-bold text-ink-900">{pkg.startingCity}</span>
+            </div>
+            <div>
+              <span className="text-slate-500 font-semibold uppercase text-[10px] block">Meal Plan</span>
+              <span className="font-bold text-ink-900">{isGroupTour ? "All Meals Included" : "Breakfast Included"}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Top Bar with Back Button */}
-      <div className="mx-auto max-w-7xl px-4 pt-28 pb-3 sm:px-6 sm:pt-32 flex justify-between items-center">
+      <div className="mx-auto max-w-7xl px-4 pt-28 pb-3 sm:px-6 sm:pt-32 flex justify-between items-center print:hidden">
         <Link
           to="/group-departures"
           className="inline-flex items-center gap-2 text-gold-400 hover:text-gold-300 text-sm font-medium transition-colors"
@@ -139,7 +239,7 @@ export function PackagePage({ slug }: { slug: string }) {
       </div>
 
       {/* Hero Section with 5-Photo Collage Grid */}
-      <section className="mx-auto max-w-7xl px-4 pt-2 pb-6 sm:px-6">
+      <section className="mx-auto max-w-7xl px-4 pt-2 pb-6 sm:px-6 print:hidden">
         <div className="relative">
           <div className="grid grid-cols-4 grid-rows-2 gap-2 md:gap-3 aspect-[16/10] sm:aspect-[21/9] rounded-3xl overflow-hidden border border-gold-500/20 shadow-2xl shadow-black/80 bg-ink-900">
             {/* Big Main Left Photo */}
@@ -223,72 +323,75 @@ export function PackagePage({ slug }: { slug: string }) {
       </section>
 
       {/* Main Content Layout: Left 2 Cols + Right 1 Col Sidebar */}
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 print:py-0 print:px-0">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 print:block">
           {/* Left Column (2 Cols) */}
-          <div className="lg:col-span-2 space-y-9">
+          <div className="lg:col-span-2 space-y-9 print:w-full print:space-y-6">
             {/* Itinerary Section with Expandable Accordions */}
             <section id="itinerary">
               <div className="flex items-center justify-between mb-5">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5 print:text-ink-950">
                   <span className="w-1.5 h-6 bg-gold-500 rounded-sm inline-block" />
                   Day-by-Day Itinerary
                 </h2>
                 <button
                   type="button"
                   onClick={() => toggleAllDays(!allDaysExpanded)}
-                  className="text-xs font-semibold text-gold-400 hover:text-gold-300 transition-colors cursor-pointer"
+                  className="text-xs font-semibold text-gold-400 hover:text-gold-300 transition-colors cursor-pointer print:hidden"
                 >
                   {allDaysExpanded ? "Collapse All" : "Expand All"}
                 </button>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-3 print:space-y-3">
                 {pkg.itinerary.map((day) => {
                   const isOpen = !!openDays[day.day];
                   return (
                     <div
                       key={day.day}
-                      className="rounded-2xl overflow-hidden border border-gold-500/20 bg-white/[0.04] transition-all duration-300 hover:border-gold-500/40"
+                      className="rounded-2xl overflow-hidden border border-gold-500/20 bg-white/[0.04] transition-all duration-300 hover:border-gold-500/40 print:border-slate-300 print:bg-slate-50 print:p-4 print:break-inside-avoid"
                     >
                       <button
                         type="button"
                         onClick={() => toggleDay(day.day)}
-                        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer transition-colors hover:bg-gold-500/[0.05]"
+                        className="w-full flex items-center justify-between gap-4 px-5 py-4 text-left cursor-pointer transition-colors hover:bg-gold-500/[0.05] print:p-0 print:cursor-default"
                       >
-                        <span className="font-semibold text-cream text-[15px] sm:text-[16px] flex items-center gap-2.5">
-                          <span className="text-gold-400 font-bold tracking-wider">{day.day}</span>
-                          <span className="text-cream/40">·</span>
-                          <span>{day.title}</span>
+                        <span className="font-semibold text-cream text-[15px] sm:text-[16px] flex items-center gap-2.5 print:text-ink-950">
+                          <span className="text-gold-400 font-bold tracking-wider print:text-amber-800">{day.day}</span>
+                          <span className="text-cream/40 print:text-slate-400">·</span>
+                          <span className="print:font-bold">{day.title}</span>
                         </span>
                         <Icon
                           name="chevron-down"
                           className={cn(
-                            "w-4 h-4 text-gold-400 shrink-0 transition-transform duration-300",
+                            "w-4 h-4 text-gold-400 shrink-0 transition-transform duration-300 print:hidden",
                             isOpen && "rotate-180",
                           )}
                         />
                       </button>
 
-                      {isOpen && (
-                        <div className="px-5 pb-5 pt-1 border-t border-white/5 space-y-3.5">
-                          <p className="text-[14.5px] leading-relaxed text-cream/80">
-                            {day.description}
-                          </p>
+                      <div
+                        className={cn(
+                          "px-5 pb-5 pt-1 border-t border-white/5 space-y-3.5 print:p-0 print:pt-2 print:border-t-0 print:border-slate-200",
+                          isOpen ? "block" : "hidden print:block",
+                        )}
+                      >
+                        <p className="text-[14.5px] leading-relaxed text-cream/80 print:text-ink-900 print:text-xs">
+                          {day.description}
+                        </p>
 
-                          {/* Quick details */}
-                          <div className="flex flex-wrap items-center gap-2 text-xs pt-1">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20 font-medium">
-                              <Icon name="utensils" className="w-3 h-3 text-gold-400" />
-                              {day.meals || (isGroupTour ? "All Meals Included" : "Breakfast Included")}
-                            </span>
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 text-cream/75 border border-white/10">
-                              <Icon name="hotel" className="w-3 h-3 text-gold-400" />
-                              Hotel Stay Included
-                            </span>
-                          </div>
+                        {/* Quick details */}
+                        <div className="flex flex-wrap items-center gap-2 text-xs pt-1">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20 font-medium print:bg-amber-100 print:text-amber-900 print:border-amber-300 print:text-[11px]">
+                            <Icon name="utensils" className="w-3 h-3 text-gold-400 print:text-amber-800" />
+                            {day.meals || (isGroupTour ? "All Meals Included" : "Breakfast Included")}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 text-cream/75 border border-white/10 print:bg-slate-200 print:text-slate-800 print:border-slate-300 print:text-[11px]">
+                            <Icon name="hotel" className="w-3 h-3 text-gold-400 print:text-slate-700" />
+                            Hotel Stay Included
+                          </span>
                         </div>
-                      )}
+                      </div>
                     </div>
                   );
                 })}
@@ -340,7 +443,7 @@ export function PackagePage({ slug }: { slug: string }) {
                   Meals
                 </h3>
                 <p className="text-cream font-medium text-xs sm:text-sm">
-                  Daily breakfasts + meals as per itinerary
+                  {isGroupTour ? "All Meals Included" : "Daily breakfasts + meals as per itinerary"}
                 </p>
               </div>
             </section>
@@ -461,18 +564,21 @@ export function PackagePage({ slug }: { slug: string }) {
                     )}
                   />
                 </button>
-                {openPolicies.cancellation && (
-                  <div className="px-5 pb-5 pt-1 border-t border-white/5 space-y-2">
-                    <ul className="space-y-1.5">
-                      {pkg.cancellation.map((rule) => (
-                        <li key={rule} className="text-xs sm:text-sm text-cream/75 flex items-start gap-2">
-                          <span className="text-gold-400">•</span>
-                          <span>{rule}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <div
+                  className={cn(
+                    "px-5 pb-5 pt-1 border-t border-white/5 space-y-2",
+                    openPolicies.cancellation ? "block" : "hidden print:block",
+                  )}
+                >
+                  <ul className="space-y-1.5">
+                    {pkg.cancellation.map((rule) => (
+                      <li key={rule} className="text-xs sm:text-sm text-cream/75 flex items-start gap-2">
+                        <span className="text-gold-400">•</span>
+                        <span>{rule}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
               {/* Terms & Important Information */}
@@ -495,18 +601,21 @@ export function PackagePage({ slug }: { slug: string }) {
                     )}
                   />
                 </button>
-                {openPolicies.terms && (
-                  <div className="px-5 pb-5 pt-1 border-t border-white/5 space-y-2">
-                    <ul className="space-y-1.5">
-                      {pkg.importantInfo.map((info) => (
-                        <li key={info} className="text-xs sm:text-sm text-cream/75 flex items-start gap-2">
-                          <span className="text-gold-400">•</span>
-                          <span>{info}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                <div
+                  className={cn(
+                    "px-5 pb-5 pt-1 border-t border-white/5 space-y-2",
+                    openPolicies.terms ? "block" : "hidden print:block",
+                  )}
+                >
+                  <ul className="space-y-1.5">
+                    {pkg.importantInfo.map((info) => (
+                      <li key={info} className="text-xs sm:text-sm text-cream/75 flex items-start gap-2">
+                        <span className="text-gold-400">•</span>
+                        <span>{info}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </section>
 
@@ -538,7 +647,7 @@ export function PackagePage({ slug }: { slug: string }) {
           </div>
 
           {/* Right Column: Sticky Sidebar with Pricing, CTAs & Inline Enquiry Form */}
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 print:hidden">
             <div className="sticky top-28 bg-gradient-to-b from-ink-950 via-ink-900 to-black border border-gold-500/25 rounded-3xl p-6 shadow-2xl shadow-black/80 space-y-5">
               {/* Pricing Box */}
               <div className="pb-4 border-b border-white/10">
@@ -584,7 +693,7 @@ export function PackagePage({ slug }: { slug: string }) {
 
                 <button
                   type="button"
-                  onClick={() => window.print()}
+                  onClick={handleDownloadItinerary}
                   className="w-full flex items-center justify-center gap-2 bg-white/[0.06] hover:bg-white/[0.1] border border-gold-500/30 text-gold-300 py-3 rounded-xl font-semibold text-sm transition-all cursor-pointer"
                 >
                   <Icon name="download" className="w-4 h-4" />
@@ -627,8 +736,29 @@ export function PackagePage({ slug }: { slug: string }) {
         </div>
       </div>
 
+      {/* Print-only footer */}
+      <div className="hidden print:block max-w-5xl mx-auto px-6 pt-6 pb-12 mt-12 mb-8 border-t-2 border-[#d4af37] text-center text-xs text-gray-700">
+        <p className="font-bold text-sm text-gray-950">{site.name} — Handcrafted Experiences &amp; Group Tours</p>
+        <div className="flex items-center justify-center gap-4 mt-1.5 text-xs text-gray-600">
+          <span className="inline-flex items-center gap-1">
+            <Icon name="phone" className="w-3 h-3 text-amber-700" /> {site.phone}
+          </span>
+          <span>•</span>
+          <span className="inline-flex items-center gap-1">
+            <Icon name="mail" className="w-3 h-3 text-amber-700" /> {site.email}
+          </span>
+          <span>•</span>
+          <span className="inline-flex items-center gap-1">
+            <Icon name="globe" className="w-3 h-3 text-amber-700" /> travelbees.in
+          </span>
+        </div>
+        <p className="text-[11px] text-gray-500 mt-2">
+          This itinerary is exclusively prepared for {pkg.name}. Rates and itinerary components are subject to reconfirmation at booking time.
+        </p>
+      </div>
+
       {/* Related Packages Carousel */}
-      <section className="border-t border-white/10 py-16 sm:py-20 bg-ink-950">
+      <section className="border-t border-white/10 py-16 sm:py-20 bg-ink-950 print:hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -656,7 +786,7 @@ export function PackagePage({ slug }: { slug: string }) {
       </section>
 
       {/* Mobile Sticky Bottom CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2.5 border-t border-white/10 bg-ink-950/95 px-4 py-3 backdrop-blur-xl lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 flex items-center gap-2.5 border-t border-white/10 bg-ink-950/95 px-4 py-3 backdrop-blur-xl lg:hidden print:hidden">
         <div className="flex-1">
           <span className="block text-[10px] uppercase tracking-wider text-cream/50 font-semibold">
             Price

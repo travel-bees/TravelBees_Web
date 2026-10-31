@@ -157,20 +157,28 @@ export function Button({
   );
 
   if (href) {
-    const external = /^https?:\/\//i.test(href);
+    const isExternal =
+      /^https?:\/\//i.test(href) ||
+      /^mailto:/i.test(href) ||
+      /^tel:/i.test(href);
+
     return (
       <a
         href={href}
         className={classes}
         {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
-        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        {...(isExternal && /^https?:\/\//i.test(href)
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
         onClick={(event) => {
+          (rest as AnchorHTMLAttributes<HTMLAnchorElement>).onClick?.(event);
           if (
             event.defaultPrevented ||
             event.metaKey ||
             event.ctrlKey ||
             event.shiftKey ||
-            event.button !== 0
+            event.button !== 0 ||
+            isExternal
           ) {
             return;
           }

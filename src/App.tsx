@@ -39,7 +39,7 @@ function Routes() {
   if (segments.length === 0 || isHomeSection(first)) return <Home />;
   if (first === "about") return <AboutPage />;
   if (first === "blog") return segments[1] ? <BlogPostPage slug={segments[1]} /> : <BlogListPage />;
-  if (first === "packages" && segments[1]) return <PackagePage slug={segments[1]} />;
+  if (first === "packages" && segments[1]) return <PackagePage key={segments[1]} slug={segments[1]} />;
   if (first === "destinations" && segments[1]) return <DestinationPage slug={segments[1]} />;
   if (first === "legal") return <LegalPage type={segments[1] ?? "privacy"} />;
 

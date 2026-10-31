@@ -11,7 +11,7 @@ const socials: { name: string; icon: IconName; href: string }[] = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-ink-950 text-cream">
+    <footer className="relative overflow-hidden bg-ink-950 text-cream print:hidden">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gold-500/60 to-transparent" />
 
       <div className="mx-auto max-w-[1280px] px-5 pb-10 pt-16 sm:px-8 sm:pt-20">

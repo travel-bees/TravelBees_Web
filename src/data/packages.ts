@@ -1088,11 +1088,6 @@ export const packages: TravelPackage[] = [
 ];
 
 export const getPackage = (slug: string) =>
-  packages.find(
-    (p) =>
-      p.slug === slug ||
-      (slug === "thailand-escape" && (p.slug === "thailand-pattaya-bangkok" || p.slug === "thailand-tropical" || p.slug === "thailand-escape")) ||
-      (slug === "thailand-pattaya-bangkok" && (p.slug === "thailand-escape" || p.slug === "thailand-pattaya-bangkok")) ||
-      (slug === "thailand-tropical" && (p.slug === "thailand-escape" || p.slug === "thailand-tropical"))
-  );
+  packages.find((p) => p.slug === slug) ||
+  (slug === "thailand-escape" ? packages.find((p) => p.slug === "thailand-pattaya-bangkok") : undefined);
 export const featuredPackages = packages.filter((p) => p.featured);

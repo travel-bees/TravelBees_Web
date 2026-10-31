@@ -16,7 +16,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with Travelbees on WhatsApp"
-      className={`group fixed right-5 z-40 flex items-center gap-2.5 rounded-full bg-[#25D366] py-3.5 pl-4 pr-5 text-white shadow-[0_18px_40px_-12px_rgba(37,211,102,0.7)] transition-all duration-300 hover:scale-[1.04] hover:bg-[#1ebe5b] ${
+      className={`group fixed right-5 z-40 flex items-center gap-2.5 rounded-full bg-[#25D366] py-3.5 pl-4 pr-5 text-white shadow-[0_18px_40px_-12px_rgba(37,211,102,0.7)] transition-all duration-300 hover:scale-[1.04] hover:bg-[#1ebe5b] print:hidden ${
         onPackagePage ? "bottom-24 lg:bottom-5" : "bottom-5"
       }`}
     >

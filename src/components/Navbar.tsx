@@ -44,7 +44,7 @@ export function Navbar() {
 
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+          "fixed inset-x-0 top-0 z-50 transition-all duration-500 print:hidden",
           solid
             ? "border-b border-white/10 bg-ink-950/85 backdrop-blur-xl"
             : "border-b border-transparent bg-transparent",

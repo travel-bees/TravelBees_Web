@@ -118,7 +118,11 @@ export function CustomTripSection() {
                 >
                   Plan My Custom Trip
                 </Button>
-                <Button variant="whatsapp" size="lg" href={site.whatsappHref}>
+                <Button
+                  variant="whatsapp"
+                  size="lg"
+                  href={`${site.whatsappHref}?text=${encodeURIComponent("Hi Travelbees! I'd like to plan a custom trip. Please connect with me.")}`}
+                >
                   WhatsApp Us
                 </Button>
               </div>
