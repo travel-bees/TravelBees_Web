@@ -23,7 +23,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Nov – Mar",
     idealFor: "Friends, honeymooners, families",
-    startingPrice: 45000,
+    startingPrice: 62999,
     blurb:
       "The classic first-abroad trip: short flights, warm water, longtail boats and a night market around every corner. Easy to do cheap, easy to do luxuriously.",
     highlights: ["Coral Island & Pattaya shows", "Bangkok temples & river cruise", "Phuket & Krabi island hopping"],
@@ -36,7 +36,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Dec – Feb · Jun – Aug",
     idealFor: "Families, couples, short breaks",
-    startingPrice: 62000,
+    startingPrice: 54999,
     blurb:
       "Kuala Lumpur's skyline, the Cameron Highlands' tea rows and the colonial streets of Penang — three very different holidays in one short flight.",
     highlights: ["Petronas Towers", "Batu Caves", "Penang street art & food"],
@@ -49,7 +49,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Feb – Apr · Jul – Sep",
     idealFor: "Families with kids, short breaks",
-    startingPrice: 68000,
+    startingPrice: 69999,
     blurb:
       "Clean, easy and endlessly entertaining — Universal Studios, the SuperTree Grove and hawker centres where a Michelin plate of chicken rice costs less than a cinema ticket.",
     highlights: ["Gardens by the Bay", "Sentosa island day", "Hawker centre food trail"],
@@ -62,7 +62,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Nov – Mar",
     idealFor: "Families, shopping trips, luxury",
-    startingPrice: 74000,
+    startingPrice: 74999,
     blurb:
       "Desert dunes at golden hour, the world's tallest tower and malls that are attractions in themselves. A short flight and a big-change-of-scene holiday.",
     highlights: ["Desert safari & dune drive", "Burj Khalifa observatory", "Old Dubai souks"],
@@ -75,7 +75,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Jul – Oct",
     idealFor: "Wildlife lovers, photographers, families",
-    startingPrice: 210000,
+    startingPrice: 99999,
     blurb:
       "Dawn game drives in the Masai Mara, hot-air balloons over the plains and tented camps under a sky absolutely full of stars. The trip people talk about for decades.",
     highlights: ["Masai Mara game drives", "Balloon safari option", "Lake Naivasha"],
@@ -88,7 +88,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Apr – Oct",
     idealFor: "Couples, honeymooners, groups",
-    startingPrice: 78000,
+    startingPrice: 74999,
     blurb:
       "Ubud's jungle temples and rice terraces for the mornings, Seminyak's beach clubs for the evenings. Bali is the honeymoon we book most after the Maldives.",
     highlights: ["Ubud rice terraces", "Uluwatu cliff temple", "Nusa Penida day trip"],
@@ -101,7 +101,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Oct – Apr",
     idealFor: "Backpackers, couples, food lovers",
-    startingPrice: 72000,
+    startingPrice: 74999,
     blurb:
       "Ha Long Bay at sunrise, Hoi An's lantern lanes and a bowl of pho for breakfast. Vietnam is the rare place that is both budget-friendly and genuinely spectacular.",
     highlights: ["Ha Long Bay cruise", "Hoi An ancient town", "Hanoi street food"],
@@ -128,7 +128,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Apr – Jun · Sep – Oct",
     idealFor: "Honeymooners, families, first-timers",
-    startingPrice: 245000,
+    startingPrice: 249999,
     isComingSoon: true,
     blurb:
       "Swiss lakes and alpine rail, Parisian mornings, Italian evenings. Europe is a big-ticket holiday, so we plan it carefully — routing, rail passes and the right hotels.",
@@ -146,7 +146,7 @@ export const domesticDestinations: Destination[] = [
     region: "Domestic",
     bestTime: "Oct – May",
     idealFor: "Couples, families, honeymooners",
-    startingPrice: 42000,
+    startingPrice: 44999,
     blurb:
       "Radhanagar sunsets, coral gardens and the calmest water you'll find in India. No visa, no currency change, no long-haul flight.",
     highlights: ["Radhanagar Beach sunset", "Elephant Beach snorkelling", "Cellular Jail history"],
