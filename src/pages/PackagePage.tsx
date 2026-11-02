@@ -198,7 +198,14 @@ export function PackagePage({ slug }: { slug: string }) {
             </div>
             <div className="text-right shrink-0">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">Package Cost</span>
-              <span className="text-2xl font-black text-amber-700">{pkg.priceLabel}</span>
+              <div className="flex items-baseline gap-1.5 justify-end">
+                <span className="text-2xl font-black text-amber-700">{pkg.priceLabel}</span>
+                {pkg.originalPriceLabel && (
+                  <span className="text-sm font-semibold text-slate-400 line-through decoration-rose-500/80">
+                    {pkg.originalPriceLabel}
+                  </span>
+                )}
+              </div>
               <span className="text-[11px] text-slate-500 block">per person on twin sharing</span>
             </div>
           </div>
@@ -654,10 +661,15 @@ export function PackagePage({ slug }: { slug: string }) {
                 <span className="text-cream/50 text-[11px] uppercase tracking-wider font-semibold">
                   Starting From
                 </span>
-                <div className="flex items-baseline gap-2 mt-1">
+                <div className="flex items-baseline gap-2.5 mt-1 flex-wrap">
                   <span className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-gold-300 via-gold-400 to-amber-500 bg-clip-text text-transparent">
                     {pkg.priceLabel}
                   </span>
+                  {pkg.originalPriceLabel && (
+                    <span className="text-lg font-semibold text-cream/40 line-through decoration-rose-500/80">
+                      {pkg.originalPriceLabel}
+                    </span>
+                  )}
                 </div>
                 <p className="text-cream/60 text-xs mt-1">per person on twin sharing</p>
               </div>
@@ -791,7 +803,14 @@ export function PackagePage({ slug }: { slug: string }) {
           <span className="block text-[10px] uppercase tracking-wider text-cream/50 font-semibold">
             Price
           </span>
-          <span className="text-base font-extrabold text-gold-400">{pkg.priceLabel}</span>
+          <div className="flex items-baseline gap-1.5 flex-wrap">
+            <span className="text-base font-extrabold text-gold-400">{pkg.priceLabel}</span>
+            {pkg.originalPriceLabel && (
+              <span className="text-xs text-cream/40 line-through decoration-rose-500/80">
+                {pkg.originalPriceLabel}
+              </span>
+            )}
+          </div>
         </div>
         <button
           type="button"

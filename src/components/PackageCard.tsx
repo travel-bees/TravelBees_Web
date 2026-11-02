@@ -51,9 +51,16 @@ export function PackageCard({ pkg, eager = false }: { pkg: TravelPackage; eager?
             <span className="block text-[10.5px] font-semibold uppercase tracking-[0.16em] text-ink-700/50">
               Starting from
             </span>
-            <span className="text-[1.6rem] font-extrabold tracking-tight text-ink-900">
-              {pkg.priceLabel}
-            </span>
+            <div className="flex items-baseline gap-2 flex-wrap">
+              <span className="text-[1.6rem] font-extrabold tracking-tight text-ink-900">
+                {pkg.priceLabel}
+              </span>
+              {pkg.originalPriceLabel && (
+                <span className="text-[14px] font-semibold text-ink-700/40 line-through decoration-rose-500/80 decoration-[1.5px]">
+                  {pkg.originalPriceLabel}
+                </span>
+              )}
+            </div>
           </div>
           <Button href={`/packages/${pkg.slug}`} size="sm" variant="dark" icon="arrow-right">
             View Trip

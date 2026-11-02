@@ -93,8 +93,15 @@ export function GroupTourCard({ departure }: { departure: GroupDeparture }) {
             <dt className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-cream/45">
               Starting from
             </dt>
-            <dd className="mt-1 text-[15px] font-semibold text-gold-300">
-              ₹{departure.price.toLocaleString("en-IN")}
+            <dd className="mt-1 flex items-baseline gap-2 flex-wrap">
+              <span className="text-[15.5px] font-bold text-gold-300">
+                ₹{departure.price.toLocaleString("en-IN")}
+              </span>
+              {departure.originalPrice && (
+                <span className="text-[13px] font-medium text-cream/40 line-through decoration-rose-500/90 decoration-[1.5px]">
+                  ₹{departure.originalPrice.toLocaleString("en-IN")}
+                </span>
+              )}
             </dd>
           </div>
         </dl>
