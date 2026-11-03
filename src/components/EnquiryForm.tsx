@@ -3,6 +3,7 @@ import { cn } from "../utils/cn";
 import { emptyEnquiry, useApp, type EnquiryValues } from "../lib/app-context";
 import { site } from "../data/site";
 import { packages } from "../data/packages";
+import { sendEnquiryEmail } from "../lib/email";
 import { Icon } from "./Icon";
 import { Button } from "./ui";
 
@@ -45,6 +46,7 @@ export function EnquiryForm() {
   const [values, setValues] = useState<EnquiryValues>(emptyEnquiry);
   const [errors, setErrors] = useState<Partial<Record<keyof EnquiryValues, string>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (enquiryOpen) {
@@ -52,6 +54,7 @@ export function EnquiryForm() {
       setStep(0);
       setErrors({});
       setSubmitted(false);
+      setIsSubmitting(false);
     }
   }, [enquiryOpen, enquiryPrefill]);
 
@@ -90,21 +93,24 @@ export function EnquiryForm() {
   };
 
   const whatsappLink = useMemo(() => {
-    const text = [
-      `Hi Travelbees! I'd like to plan a trip.`,
-      values.destination ? `Destination: ${values.destination}` : "",
-      values.tripType ? `Trip type: ${values.tripType}` : "",
-      values.travelDates ? `Travel month/dates: ${values.travelDates}` : "",
-      values.travelers ? `Travellers: ${values.travelers}` : "",
-      values.budget ? `Budget per person: ${values.budget}` : "",
-      values.requirements ? `Preferences: ${values.requirements}` : "",
-      values.name ? `Name: ${values.name}` : "",
-      values.phone ? `Phone: ${values.phone}` : "",
-      values.message ? `Notes: ${values.message}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-    return `${site.whatsappHref}?text=${encodeURIComponent(text)}`;
+    const lines = [
+      `*New Trip Enquiry — Travelbees* 🐝`,
+      ``,
+      `*Destination:* ${values.destination || "Custom"}`,
+      values.tripType ? `*Trip Type:* ${values.tripType}` : "",
+      values.travelDates ? `*Travel Dates / Month:* ${values.travelDates}` : "",
+      values.travelers ? `*Travellers:* ${values.travelers}` : "",
+      values.budget ? `*Budget:* ${values.budget}` : "",
+      values.requirements ? `*Preferences:* ${values.requirements}` : "",
+      ``,
+      `*Contact Details:*`,
+      values.name ? `*Name:* ${values.name}` : "",
+      values.phone ? `*Phone:* ${values.phone}` : "",
+      values.email ? `*Email:* ${values.email}` : "",
+      values.message ? `*Notes:* ${values.message}` : "",
+    ].filter(Boolean);
+
+    return `${site.whatsappHref}?text=${encodeURIComponent(lines.join("\n"))}`;
   }, [values]);
 
   if (!enquiryOpen) return null;
@@ -201,19 +207,14 @@ export function EnquiryForm() {
                 <Icon name="check" className="h-8 w-8" strokeWidth={3} />
               </span>
               <h3 className="mt-7 text-[1.9rem] font-bold leading-tight tracking-tight text-ink-900">
-                Thanks! Our travel expert will get in touch with you shortly.
+                Enquiry Received!
               </h3>
               <p className="mt-4 max-w-md text-[15px] leading-relaxed text-ink-700/75">
-                We've received your enquiry{values.destination ? ` for ${values.destination}` : ""}. If
-                you'd like to fast-track things, message us on WhatsApp — we usually reply within a few
-                hours.
+                Thank you! We've received your enquiry for <strong className="text-ink-950">{values.destination || "your holiday"}</strong>. Our travel specialist will review your details and reach out to you shortly.
               </p>
               <div className="mt-8 flex flex-wrap justify-center gap-3">
-                <Button variant="whatsapp" size="lg" href={whatsappLink}>
-                  Chat on WhatsApp
-                </Button>
-                <Button variant="outline" size="lg" onClick={closeEnquiry}>
-                  Back to site
+                <Button variant="primary" size="lg" onClick={closeEnquiry}>
+                  Done
                 </Button>
               </div>
             </div>
@@ -251,13 +252,17 @@ export function EnquiryForm() {
 
               <form
                 className="mt-7 space-y-5"
-                onSubmit={(event) => {
+                onSubmit={async (event) => {
                   event.preventDefault();
                   if (!validateStep(step)) return;
                   if (step < steps.length - 1) {
                     setStep(step + 1);
                     return;
                   }
+                  setIsSubmitting(true);
+                  // Send enquiry email directly to info@travelbeesholidays.com
+                  await sendEnquiryEmail(values);
+                  setIsSubmitting(false);
                   setSubmitted(true);
                 }}
               >
@@ -394,8 +399,18 @@ export function EnquiryForm() {
                 )}
 
                 <div className="flex flex-wrap items-center gap-3 border-t border-ink-900/10 pt-6">
-                  <Button type="submit" variant="primary" size="lg" className="flex-1 sm:flex-none">
-                    {step === steps.length - 1 ? "Send Enquiry" : "Continue"}
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    className="flex-1 sm:flex-none"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting
+                      ? "Sending Enquiry..."
+                      : step === steps.length - 1
+                        ? "Send Enquiry"
+                        : "Continue"}
                   </Button>
                   {step > 0 && (
                     <Button

@@ -7,6 +7,7 @@ import { Icon } from "../components/Icon";
 import { site } from "../data/site";
 import { px } from "../lib/media";
 import { Link } from "../components/ui";
+import { sendNewsletterEmail } from "../lib/email";
 
 const gallery = [
   { imageId: 39472103, alt: "Rice terraces in Bali", className: "row-span-2" },
@@ -201,16 +202,17 @@ export function NewsletterSection() {
 
         <Reveal delay={200}>
           {done ? (
-            <p className="mx-auto mt-9 max-w-md rounded-2xl border border-gold-500/40 bg-gold-500/10 px-6 py-5 text-[15px] text-gold-200">
-              You're on the list. Watch out for our next group departure announcement.
+            <p className="mx-auto mt-9 max-w-md rounded-2xl border border-gold-500/40 bg-gold-500/10 px-6 py-5 text-center text-[15px] text-gold-200">
+              You're on the list! Watch out for our next group departure announcement.
             </p>
           ) : (
             <form
               className="mx-auto mt-9 flex max-w-xl flex-col gap-3 sm:flex-row"
-              onSubmit={(event) => {
+              onSubmit={async (event) => {
                 event.preventDefault();
                 if (!/^\S+@\S+\.\S+$/.test(email)) return;
                 setDone(true);
+                await sendNewsletterEmail(email);
               }}
             >
               <label htmlFor="newsletter-email" className="sr-only">
