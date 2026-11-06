@@ -88,7 +88,7 @@ export const internationalDestinations: Destination[] = [
     region: "International",
     bestTime: "Apr – Oct",
     idealFor: "Couples, honeymooners, groups",
-    startingPrice: 74999,
+    startingPrice: 79999,
     blurb:
       "Ubud's jungle temples and rice terraces for the mornings, Seminyak's beach clubs for the evenings. Bali is the honeymoon we book most after the Maldives.",
     highlights: ["Ubud rice terraces", "Uluwatu cliff temple", "Nusa Penida day trip"],

@@ -32,6 +32,7 @@ export interface TravelPackage {
   priceLabel: string;
   originalPrice?: number;
   originalPriceLabel?: string;
+  mealPlan?: string;
   imageId: number | string;
   galleryIds: (number | string)[];
   tagline: string;

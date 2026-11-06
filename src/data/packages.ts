@@ -18,6 +18,14 @@ import tt2 from "../images/Tropical Thailand/2.jpg";
 import tt3 from "../images/Tropical Thailand/3.jpg";
 import tt4 from "../images/Tropical Thailand/4.jpg";
 
+import tbMain from "../images/Tropical Bali/main.jpg";
+import tb1 from "../images/Tropical Bali/1.jfif";
+import tb2 from "../images/Tropical Bali/2.jfif";
+import tb3 from "../images/Tropical Bali/3.jfif";
+import tb4 from "../images/Tropical Bali/4.jfif";
+
+import baliImg from "../images/International/Bali.jpg";
+
 /**
  * NOTE: Prices are indicative starting prices used as placeholders.
  * Swap this file for a CMS/DB collection when the real catalogue is ready.
@@ -670,59 +678,128 @@ export const packages: TravelPackage[] = [
   },
   {
     slug: "bali-escape",
-    name: "Bali — Ubud & Seminyak Escape",
+    name: "Island of Dreams",
     destination: "Bali",
     region: "International",
     category: "International",
     duration: "5N / 6D",
     nights: 5,
-    tripType: "International · Couples & Families",
-    styles: ["Honeymoon", "Group Tour", "Private"],
+    tripType: "International · Group & Private",
+    styles: ["Group Tour", "Family", "Adventure", "Honeymoon"],
     startingCity: "Bengaluru (BLR)",
-    bestTime: "Apr – Oct",
-    price: 75999,
-    priceLabel: "₹75,999",
-    originalPrice: 80000,
-    originalPriceLabel: "₹80,000",
-    imageId: 15994332,
-    galleryIds: [39472103, 2166559, 7479103],
-    tagline: "Rice terraces, cliff temples & sunset beach clubs",
+    bestTime: "Year-Round · Apr – Oct",
+    price: 79999,
+    priceLabel: "₹79,999",
+    originalPrice: 84999,
+    originalPriceLabel: "₹84,999",
+    mealPlan: "Meals as specified",
+    imageId: tbMain,
+    galleryIds: [tb1, tb2, tb3, tb4],
+    tagline: "Tanjung Benoa Watersports, Uluwatu Kecak Dance, Nusa Penida, Tanah Lot & Kintamani Ubud",
     description:
-      "Ubud's lush jungle retreats, Tegallalang rice terraces, Uluwatu cliff sunset temple, and relaxed beachside days in Seminyak and Nusa Penida.",
+      "Experience the ultimate 6-day Bali island adventure — Tanjung Benoa watersports (banana boat, parasailing, jet ski), Uluwatu sunset Kecak fire dance, iconic temples of Taman Ayun, Ulun Danu & Tanah Lot, thrilling Nusa Penida island cruise, and Kintamani volcano with Ubud Palace & art markets.",
     overview:
-      "A scenic 6-day Indonesian getaway featuring the cultural soul of Ubud and the trendy coastal energy of Seminyak. Swing over emerald rice terraces, witness the hypnotic Kecak dance at Uluwatu, and cruise to the dramatic cliffs of Nusa Penida.",
+      "An exhilarating 6-day, 5-night tropical Bali holiday packed with vibrant ocean thrills, world-famous cliff temples, volcanic vistas, and sacred island heritage. From adrenaline-pumping watersports at Tanjung Benoa and the mesmerizing Kecak fire dance on Uluwatu's cliffs to the dramatic sea temples of Ulun Danu and Tanah Lot, sailing to Nusa Penida's breathtaking Kelingking cliffs, and exploring Kintamani's volcano viewpoints and Ubud's artisan markets — every private transfer, stay, excursion, and ticket is seamlessly organized.",
     highlights: [
-      "Tegallalang rice terrace walk and Bali jungle swing",
-      "Sunset Kecak fire dance on the cliff edge of Uluwatu Temple",
-      "Speedboat day excursion to Nusa Penida (Kelingking Beach & Broken Beach)",
-      "Traditional Balinese couple massage and spa session",
+      "Tanjung Benoa water sports adventure: Banana Boat, Tandem Parasailing & Jet Ski",
+      "Iconic Uluwatu cliff temple visit with sunset Kecak & Fire Dance performance",
+      "Full-day Nusa Penida Island speedboat excursion (Kelingking Beach, Angel's Billabong & Broken Beach)",
+      "Scenic Bali Temple Tour: Royal Taman Ayun, Ulun Danu Beratan on Lake Bratan & oceanfront Tanah Lot",
+      "Kintamani volcano adventure with panoramic views of Mount Batur and crater lake",
+      "Ubud cultural experience: Ubud Royal Palace, vibrant Ubud Art Market & lush scenery",
+      "Comfortable stays in handpicked 4★ hotels/resorts with meals as specified",
+      "Private AC transfers for all airport pickups, drops, and sightseeing excursions",
     ],
     itinerary: [
-      { day: "Day 01", title: "Arrival in Denpasar ➡️ Ubud", description: "Airport pickup, scenic drive to Ubud, resort check-in and evening leisure around Ubud Art Market." },
-      { day: "Day 02", title: "Ubud Culture & Rice Terraces", description: "Visit Sacred Monkey Forest, Tegallalang rice paddies, coffee plantation, and Tirta Empul holy spring." },
-      { day: "Day 03", title: "Nusa Penida Island Tour", description: "Speedboat across to Nusa Penida to see iconic Kelingking cliff, Angel's Billabong, and Crystal Bay." },
-      { day: "Day 04", title: "Ubud ➡️ Seminyak & Uluwatu Sunset", description: "Transfer to Seminyak beachfront, explore chic boutiques, and head to Uluwatu Temple for sunset Kecak dance." },
-      { day: "Day 05", title: "Water Sports & Beach Club Evening", description: "Optional watersports at Tanjung Benoa followed by sunset cocktails at a premier Seminyak beach club." },
-      { day: "Day 06", title: "Departure", description: "Leisurely floating breakfast, last-minute souvenir shopping, and private transfer to airport." },
+      {
+        day: "Day 01",
+        title: "Arrival in Bali (DPS) ➡️ Private Transfer to Kuta & Leisure 🌴",
+        description:
+          "Arrive at Ngurah Rai International Airport (DPS) in Bali, where our warm Travelbees representative greets you with a traditional welcome. Enjoy a comfortable private air-conditioned transfer to your hotel in Kuta. Complete check-in formalities and settle into your stylish accommodation. Spend the rest of the day at leisure — relax by the swimming pool, stroll along Kuta's bustling beach promenade, or explore local cafés and lively night markets at your own pace. Overnight stay in Kuta.",
+        meals: "Meals as specified",
+      },
+      {
+        day: "Day 02",
+        title: "Tanjung Benoa Watersports, GWK & Uluwatu Sunset Kecak Fire Dance 🔥",
+        description:
+          "Get ready for an action-packed day filled with coastal adventure, culture, and breathtaking ocean views! After breakfast, head to Tanjung Benoa in Nusa Dua for exhilarating water sports: zoom across the waves on a Banana Boat ride, take to the skies with Tandem Parasailing for bird's-eye coastal vistas, and feel the adrenaline on a Jet Ski experience. Enjoy an optional visit to Garuda Wisnu Kencana (GWK) Cultural Park, home to the magnificent 122-meter statue of Lord Vishnu. In the late afternoon, visit the iconic Uluwatu Temple, dramatically perched on a 70-meter cliff overlooking the Indian Ocean. Witness the mesmerizing Kecak and Fire Dance performance set against the backdrop of a spectacular sunset. Overnight stay in Kuta.",
+        meals: "Meals as specified",
+      },
+      {
+        day: "Day 03",
+        title: "Temple Tour — Taman Ayun, Ulun Danu Beratan & Tanah Lot Sunset 🛕",
+        description:
+          "Fuel up with breakfast before embarking on a scenic cultural temple tour across Bali. Begin at the royal Taman Ayun Temple in Mengwi, famed for its elegant multi-tiered shrines, lotus ponds, and manicured gardens. Continue uphill to the cool Bedugul highlands to visit the iconic Ulun Danu Beratan Temple, floating serenely on the waters of Lake Bratan against mist-covered mountains. In the afternoon, journey to the world-famous Tanah Lot Temple, perched on an offshore rocky outcrop in the sea. Watch waves crash against the temple walls as the golden sun dips into the ocean. Return for an overnight stay in Kuta.",
+        meals: "Meals as specified",
+      },
+      {
+        day: "Day 04",
+        title: "Nusa Penida Island Adventure — Kelingking, Broken Beach & Angel's Billabong 🚤",
+        description:
+          "After an early breakfast, transfer to Sanur Harbour and board a high-speed boat to Nusa Penida Island. Embark on an unforgettable island adventure exploring Nusa Penida's most jaw-dropping coastal wonders: marvel at the world-famous T-Rex cliff at Kelingking Beach, capture dramatic photographs at the natural stone arch of Broken Beach (Pasih Uug), and gaze into the emerald infinity pool of Angel's Billabong. Enjoy an included island lunch with panoramic ocean views, followed by time to relax by the crystal-clear waters of Crystal Bay. In the late afternoon, return by speedboat to the Bali mainland and transfer to your hotel. Overnight stay in Kuta.",
+        meals: "Meals as specified",
+      },
+      {
+        day: "Day 05",
+        title: "Kintamani Volcano, Ubud Palace & Ubud Art Market Exploration 🌋",
+        description:
+          "Start your morning with breakfast, then journey into the scenic highlands of Kintamani. Gaze upon sweeping panoramic viewpoints of the active Mount Batur volcano and its shimmering crater lake. Stop at a traditional Balinese coffee plantation to sample aromatic spices, herbal teas, and authentic Luwak coffee. In the afternoon, descend to the cultural heartland of Ubud. Tour the historic Ubud Royal Palace (Puri Saren Agung) to admire intricate Balinese stone carvings, then browse the vibrant stalls of the Ubud Traditional Art Market for handcrafted souvenirs, paintings, and woven crafts. Return to your hotel for an overnight stay in Kuta.",
+        meals: "Meals as specified",
+      },
+      {
+        day: "Day 06",
+        title: "Farewell Bali ➡️ Ngurah Rai Airport Departure ✈️",
+        description:
+          "Bid farewell to the beautiful island of Bali, taking home unforgettable memories and photographs of your tropical getaway. Enjoy breakfast at the resort and complete check-out formalities. Meet your driver and proceed with a comfortable private transfer to Ngurah Rai International Airport for your departure flight back home.",
+        meals: "Meals as specified",
+      },
     ],
     inclusions: [
-      "5 nights in 4★ handpicked resorts with daily breakfast",
-      "Full-day Nusa Penida speedboat tour with lunch",
-      "Private AC transfers for all airport pickups and sightseeing",
-      "Entry tickets to Uluwatu, Monkey Forest, and Tirta Empul",
-      "English-speaking local guide and driver support",
+      "International round-trip flights (available on request with best fares)",
+      "5 nights accommodation in handpicked 4★ hotels/resorts in Kuta / South Bali with meals as specified",
+      "Private AC vehicle for all airport transfers, drops, and sightseeing excursions",
+      "Tanjung Benoa water sports package: Banana Boat Ride, Tandem Parasailing & Jet Ski Experience",
+      "Full-day Nusa Penida Island tour by high-speed boat with lunch and island transport",
+      "Full-day temple tour: Taman Ayun, Ulun Danu Beratan & Tanah Lot Temple entry tickets",
+      "Uluwatu Cliff Temple entry and reserved sunset Kecak & Fire Dance ticket",
+      "Kintamani tour with Mount Batur & crater lake viewpoints",
+      "Ubud cultural tour: Ubud Royal Palace and Ubud Traditional Art Market",
+      "English-speaking professional local tour guide and driver assistance throughout",
     ],
-    exclusions: ["International flights", "Indonesia Visa on Arrival", "Personal expenses and watersports"],
+    exclusions: [
+      "Indonesia Visa on Arrival (approx. 500,000 IDR / ~₹2,700, payable at airport)",
+      "Meals other than specified in the itinerary",
+      "Optional visit entry to GWK Cultural Park",
+      "Personal expenses, optional tours, camera fees, laundry, and tips",
+      "Travel and medical insurance",
+    ],
     hotels: [
-      { city: "Ubud", stay: "4★ jungle resort", nights: "3 nights" },
-      { city: "Seminyak", stay: "4★ beach hotel", nights: "2 nights" },
+      { city: "Kuta / South Bali", stay: "4★ Resort / Hotel (Twin Sharing)", nights: "5 nights" },
     ],
-    experiences: ["Jungle swing photo", "Kecak cliff dance", "Nusa Penida cliff views"],
-    importantInfo: ["Passport must have 6 months validity.", "Visa on Arrival is available for Indian passports."],
-    cancellation: ["30+ days: 20% retained", "15–29 days: 50% retained", "Under 14 days: non-refundable"],
+    experiences: [
+      "Tandem parasailing, banana boat & jet ski thrills at Tanjung Benoa",
+      "Sunset Kecak and Fire Dance on the 70-meter cliff edge of Uluwatu Temple",
+      "Speedboat cruise to Nusa Penida's iconic T-Rex shaped Kelingking Beach",
+      "Lake-floating Ulun Danu Beratan temple and sunset at Tanah Lot",
+      "Mount Batur volcanic vistas and shopping in Ubud's artisan markets",
+    ],
+    importantInfo: [
+      "Passport must have a minimum validity of 6 months from the date of departure with at least 2 blank pages.",
+      "Indonesia provides 30-day Visa on Arrival for Indian passport holders (approx. 500,000 IDR).",
+      "Carry swimwear, dry clothes, waterproof phone pouch, and beach towels for watersports and Nusa Penida.",
+      "Appropriate temple attire (sarong and sash) is provided or required at Balinese holy temples.",
+    ],
+    cancellation: [
+      "30+ days before departure: 20% of trip cost retained",
+      "15–29 days before departure: 50% of trip cost retained",
+      "Within 14 days: non-refundable",
+      "Boat excursions and event entry vouchers are non-refundable once issued.",
+    ],
     faqs: [
-      { q: "Is vegetarian/Indian food available in Bali?", a: "Yes, there are plenty of excellent Indian restaurants in Ubud, Kuta, and Seminyak." },
-      { q: "Can we customize this with a private pool villa?", a: "Yes, we frequently upgrade guests to private pool villas in Ubud and Seminyak." },
+      { q: "Are Indian vegetarian and Jain meals available in Bali?", a: "Yes, Kuta, Seminyak, Nusa Dua, and Ubud have numerous pure vegetarian and Indian restaurants serving North and South Indian cuisines." },
+      { q: "Can we upgrade to a private pool villa during this tour?", a: "Yes, we can easily upgrade your stay to a private luxury pool villa in Seminyak, Kuta, or Ubud on request." },
+      { q: "Is the Nusa Penida tour suitable for families?", a: "Yes, the speedboat ride is comfortable and life jackets are provided. Guided private vehicles accompany you throughout the island." },
+      { q: "Can we customize or add extra nights to this itinerary?", a: "Absolutely. You can add extra nights in Ubud for rainforest relaxation, or head to the Gili Islands for snorkeling." },
     ],
     featured: true,
   },

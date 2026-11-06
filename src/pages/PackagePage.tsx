@@ -225,7 +225,7 @@ export function PackagePage({ slug }: { slug: string }) {
             </div>
             <div>
               <span className="text-slate-500 font-semibold uppercase text-[10px] block">Meal Plan</span>
-              <span className="font-bold text-ink-900">{isGroupTour ? "All Meals Included" : "Breakfast Included"}</span>
+              <span className="font-bold text-ink-900">{pkg.mealPlan || (isGroupTour ? "All Meals Included" : "Breakfast Included")}</span>
             </div>
           </div>
         </div>
@@ -391,7 +391,7 @@ export function PackagePage({ slug }: { slug: string }) {
                         <div className="flex flex-wrap items-center gap-2 text-xs pt-1">
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gold-500/10 text-gold-300 border border-gold-500/20 font-medium print:bg-amber-100 print:text-amber-900 print:border-amber-300 print:text-[11px]">
                             <Icon name="utensils" className="w-3 h-3 text-gold-400 print:text-amber-800" />
-                            {day.meals || (isGroupTour ? "All Meals Included" : "Breakfast Included")}
+                            {day.meals || pkg.mealPlan || (isGroupTour ? "All Meals Included" : "Breakfast Included")}
                           </span>
                           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 text-cream/75 border border-white/10 print:bg-slate-200 print:text-slate-800 print:border-slate-300 print:text-[11px]">
                             <Icon name="hotel" className="w-3 h-3 text-gold-400 print:text-slate-700" />
@@ -450,7 +450,7 @@ export function PackagePage({ slug }: { slug: string }) {
                   Meals
                 </h3>
                 <p className="text-cream font-medium text-xs sm:text-sm">
-                  {isGroupTour ? "All Meals Included" : "Daily breakfasts + meals as per itinerary"}
+                  {pkg.mealPlan || (isGroupTour ? "All Meals Included" : "Daily breakfasts + meals as per itinerary")}
                 </p>
               </div>
             </section>
